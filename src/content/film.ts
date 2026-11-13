@@ -1,23 +1,23 @@
 /**
- * Cinematic film interlude — swap these files for the production film.
- * Keep the same aspect (16:9); posters are the first frame.
+ * Cinematic film interlude — Branding & Media showreel.
  *
- * TEMPORARY FOOTAGE: studio-shoot clips from Mixkit (free licence,
- * https://mixkit.co/license/#videoFree), cut and re-encoded for the web.
- * Replace with Branding & Media's own production film before launch.
+ * Source master: /public/media/film/branding.mp4 (2880×2140, ~43 MB) is
+ * NOT served to visitors; these web encodes are. To swap the film, re-encode
+ * to the same three variants and update the paths below.
  */
 export const film = {
-  /** Desktop / tablet: VP9 first (smallest), H.264 fallback. */
+  /** Desktop / tablet: VP9 first (smallest), H.264 fallback. 1440px wide. */
   sources: [
-    { src: "/media/film/studio-1600.webm", type: "video/webm" },
-    { src: "/media/film/studio-1600.mp4", type: "video/mp4" },
+    { src: "/media/film/branding-1440.webm", type: "video/webm" },
+    { src: "/media/film/branding-1440.mp4", type: "video/mp4" },
   ],
-  /** Phones and Save-Data: lighter 960×540 H.264. */
-  light: { src: "/media/film/studio-960.mp4", type: "video/mp4" },
-  poster: "/media/film/studio-poster.webp",
-  posterLight: "/media/film/studio-poster-960.webp",
-  fps: 24,
-  label: "Behind the lens: a studio shoot — styling, lighting and photography in progress",
+  /** Phones and Save-Data: lighter 960px H.264. */
+  light: { src: "/media/film/branding-960.mp4", type: "video/mp4" },
+  /** Poster = the frame at `startAt`, so poster → playback is seamless. */
+  poster: "/media/film/branding-poster.webp",
+  startAt: 8.2,
+  fps: 30,
+  label: "Branding & Media showreel: campaigns, film, sport, fashion and digital work",
   /** The word the film plays through. */
   word: "Seen",
 } as const;

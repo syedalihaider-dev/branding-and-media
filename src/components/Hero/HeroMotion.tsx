@@ -64,6 +64,9 @@ export function HeroMotion({
           d: Number(el.dataset.heroDepth),
         }));
         const onMove = (e: PointerEvent) => {
+          // Hold still while the opening sequence is composing this headline.
+          const pl = document.documentElement.dataset.preloader;
+          if (pl && pl !== "done") return;
           const nx = e.clientX / window.innerWidth - 0.5;
           const ny = e.clientY / window.innerHeight - 0.5;
           movers.forEach((m) => {

@@ -39,6 +39,9 @@ export function FilmVideo({ className }: { className?: string }) {
         el.type = s.type;
         v.appendChild(el);
       });
+      // Begin on the poster's frame so the still dissolves into motion
+      // without a cut; the loop then runs the whole reel.
+      v.addEventListener("loadedmetadata", () => (v.currentTime = film.startAt), { once: true });
       v.load();
     };
 

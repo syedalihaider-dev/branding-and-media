@@ -319,9 +319,10 @@
 }
 
 /* ---------- Preloader hand-off ----------
-   When the opening runs, its wordmark flies into this headline, so the
-   headline skips its own entrance and stays hidden until the words land.
-   The foot and stills wait for the curtain before playing their entrance. */
+   The opening assembles a pixel-exact replica of this headline over the
+   page, so the real one skips its entrance and simply appears beneath the
+   replica at "reveal". The foot and stills hold their entrance until the
+   curtain starts to open. */
 :global(html[data-preloader]) .char,
 :global(html[data-preloader]) .ampInner {
   animation: none;
@@ -329,7 +330,7 @@
 
 :global(html[data-preloader="active"]) .title,
 :global(html[data-preloader="exit"]) .title {
-  visibility: hidden;
+  opacity: 0;
 }
 
 :global(html[data-preloader="active"]) .foot > *,

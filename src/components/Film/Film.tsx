@@ -35,7 +35,7 @@ export function Film() {
 
         <div className={styles.hud} data-film-hud>
           <p className="label">
-            <span className={styles.rec} aria-hidden="true" /> Interlude — Behind the lens
+            <span className={styles.rec} aria-hidden="true" /> Interlude — Showreel
           </p>
           <div className={styles.hudRight}>
             <p className={`label ${styles.tc}`} aria-hidden="true">

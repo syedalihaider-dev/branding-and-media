@@ -1,153 +1,140 @@
-/* Hidden unless the boot script opted this visit in (JS + motion OK). */
-.preloader {
+/* No box of its own; the fixed layer below does the work. */
+.root {
+  display: contents;
+}
+
+.solid {
   display: none;
 }
 
-:global(html[data-preloader="active"]) .preloader,
-:global(html[data-preloader="exit"]) .preloader {
+:global(html[data-preloader="active"]) .solid,
+:global(html[data-preloader="exit"]) .solid,
+:global(html[data-preloader="reveal"]) .solid {
   display: block;
+}
+
+/* ---------- Solid layer ---------- */
+.solid {
   position: fixed;
   inset: 0;
   z-index: 200;
+  overflow: clip;
   color: var(--bone);
   pointer-events: auto;
-  overflow: clip;
 }
 
-:global(html[data-preloader="exit"]) .preloader {
+:global(html[data-preloader="reveal"]) .solid {
   pointer-events: none;
 }
 
-/* Two halves of the curtain; they part along the horizon on exit. */
-.panel {
+.veil {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 50.5%;
+  inset: 0;
   background: var(--ink);
 }
 
-.panelBottom {
-  top: auto;
-  bottom: 0;
-}
-
-/* Warm studio light behind the mark — brightens as the studio comes online. */
 .glow {
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: min(120vw, 110rem);
+  top: 55%;
+  width: min(130vw, 120rem);
   aspect-ratio: 2 / 1;
   translate: -50% -50%;
-  background: radial-gradient(closest-side, rgb(255 74 28 / 0.2), rgb(255 74 28 / 0.06) 45%, transparent 75%);
+  background: radial-gradient(closest-side, rgb(255 74 28 / 0.22), rgb(255 74 28 / 0.06) 50%, transparent 78%);
   opacity: 0;
   pointer-events: none;
 }
 
-.horizon {
-  position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  top: 50%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(237 232 223 / 0.28) 20%, rgb(237 232 223 / 0.28) 80%, transparent);
-  transform: scaleX(0);
-}
-
-/* ---------- Wordmark ---------- */
-.stage {
+/* Scene 01 — editorial crops. Centered on (0,0); GSAP places them. */
+.frags {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  perspective: 1100px;
-  pointer-events: none;
+  --m: 1;
 }
 
-.mark {
-  position: relative;
-  display: inline-grid;
-  /* Same proportions as the hero headline, ~1/3 scale. */
-  font-size: min(6.2vw, 10.6vh);
+.frag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  font-size: calc(var(--fs) * 1vh * var(--m));
   font-weight: 800;
   font-variation-settings: "wdth" 72;
   line-height: 0.8;
   letter-spacing: -0.035em;
   text-transform: uppercase;
-  transform-style: preserve-3d;
-}
-
-.line {
-  display: block;
-  overflow: clip;
-  overflow-clip-margin: 0.1em;
-  padding-block: 0.04em;
-  perspective: 600px;
-}
-
-.lineB {
-  justify-self: end;
-  margin-top: -0.02em;
-}
-
-.word {
-  display: inline-block;
-  transform-origin: 0 0;
   white-space: nowrap;
+  color: var(--bone);
+  mix-blend-mode: difference;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.char {
+/* The headline replica: every glyph is absolutely placed on the measured
+   position of its twin in the hero (font metrics copied at runtime). */
+.stage {
+  position: absolute;
+  inset: 0;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+}
+
+.type {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  font-weight: 800;
+  font-variation-settings: "wdth" 72;
+  line-height: 0.8;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.letter {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: inline-block;
-  transform-origin: 50% 100%;
-}
-
-
-/* The travelling light: applied once the letters have landed (no per-char
-   layers left), so background-clip covers the whole word. */
-.word[data-lit] {
-  background-image: linear-gradient(
-    100deg,
-    var(--bone) 0%,
-    var(--bone) 42%,
-    #fff8ee 48%,
-    #ffb59c 50%,
-    #fff8ee 52%,
-    var(--bone) 58%,
-    var(--bone) 100%
-  );
-  background-size: 320% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  white-space: pre;
+  opacity: 0;
+  backface-visibility: hidden;
 }
 
 .amp {
   position: absolute;
-  z-index: -1;
-  left: 50%;
-  top: 50%;
-  /* Larger than the hero ratio so it reads at this size; the FLIP scales
-     each piece independently, so it still lands exactly. */
-  translate: -56% -44%;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 2.3em;
+  left: 0;
+  top: 0;
+  display: inline-block;
   line-height: 1;
-  text-transform: none;
   letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
+  font-variation-settings: normal;
   color: var(--signal);
-}
-
-.ampInner {
-  display: block;
   opacity: 0;
 }
 
-/* ---------- Chrome ---------- */
+/* Hot line riding the edge of the Scene 04 wipe. */
+.wipe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: var(--signal);
+  box-shadow: 0 0 24px 4px rgb(255 74 28 / 0.55);
+  opacity: 0;
+}
+
+/* ---------- Chrome (visible from first paint, pre-hydration) ---------- */
+.chrome {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--muted-on-dark);
+  animation: plFade 0.9s ease-out 0.05s both;
+}
+
 .top,
 .bottom {
   position: absolute;
@@ -156,7 +143,6 @@
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-  color: var(--muted-on-dark);
 }
 
 .top {
@@ -187,21 +173,49 @@
   color: var(--signal);
 }
 
-.status {
+.slate {
   flex: none;
-  font-size: 1.05rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
   color: var(--bone);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.top,
-.bottom,
-.status {
-  opacity: 0;
+.slateIndex {
+  font-variant-numeric: tabular-nums;
+}
+
+.slateOf {
+  color: var(--muted-on-dark);
+}
+
+.slateMask {
+  display: inline-block;
+  overflow: clip;
+  overflow-clip-margin: 0.15em;
+  margin-left: 0.4rem;
+  font-size: 1.35rem;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1;
+}
+
+.slateMask > span {
+  display: inline-block;
+}
+
+@keyframes plFade {
+  from {
+    opacity: 0;
+  }
 }
 
 @media (max-width: 767.98px) {
-  .mark {
-    font-size: 10.5vw;
+  .frags {
+    --m: 0.56;
   }
 
   .descriptor {
@@ -216,106 +230,5 @@
 
   .cities {
     gap: 0.3rem 0.8rem;
-  }
-}
-
-/* =========================================================================
-   Act I — pure CSS so it starts on first paint, before hydration.
-   On [data-landed] every entrance is frozen at its end state (animation:
-   none) so GSAP can own transforms/opacity for the light and the hand-off.
-   ========================================================================= */
-.preloader {
-  --s: 1;
-}
-
-:global(html[data-preloader-repeat]) .preloader {
-  --s: 0.45;
-}
-
-.horizon {
-  animation: plHorizon calc(1.4s * var(--s)) var(--ease-out) calc(0.05s * var(--s)) both;
-}
-
-.glow {
-  animation: plFade calc(2s * var(--s)) ease-out calc(0.1s * var(--s)) both;
-}
-
-.top,
-.bottom {
-  animation: plFade calc(1s * var(--s)) ease-out calc(0.2s * var(--s)) both;
-}
-
-.status {
-  animation: plFade calc(0.8s * var(--s)) ease-out calc(0.6s * var(--s)) both;
-}
-
-.mark {
-  animation: plMark calc(2.6s * var(--s)) cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.char {
-  animation: plRise calc(1s * var(--s)) var(--ease-out) calc((0.1s + var(--i) * 0.035s) * var(--s)) both;
-}
-
-.ampInner {
-  animation: plAmp calc(1.5s * var(--s)) var(--ease-out) calc(0.55s * var(--s)) both;
-}
-
-.preloader[data-landed] :is(.horizon, .glow, .top, .bottom, .status, .mark, .char, .ampInner) {
-  animation: none;
-}
-
-.preloader[data-landed] :is(.glow, .top, .bottom, .status, .ampInner) {
-  opacity: 1;
-}
-
-.preloader[data-landed] .horizon {
-  transform: none;
-}
-
-@keyframes plHorizon {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: none;
-  }
-}
-
-@keyframes plFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes plMark {
-  from {
-    transform: translateZ(-160px) rotateX(16deg) rotateY(-12deg);
-  }
-  to {
-    transform: none;
-  }
-}
-
-@keyframes plRise {
-  from {
-    transform: translateY(125%) rotateX(-88deg);
-  }
-  to {
-    transform: none;
-  }
-}
-
-@keyframes plAmp {
-  from {
-    opacity: 0;
-    transform: scale(0.35) rotate(-36deg);
-  }
-  to {
-    opacity: 1;
-    transform: none;
   }
 }
