@@ -1,0 +1,231 @@
+.cta {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  display: grid;
+  background: var(--ink);
+  color: var(--bone);
+  overflow: clip;
+  isolation: isolate;
+}
+
+/* ---------- Spotlit stage ---------- */
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.still {
+  position: absolute;
+  overflow: clip;
+  filter: grayscale(0.2);
+}
+
+.still img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.s1 { top: 8%; left: 4%; width: 30%; aspect-ratio: 920 / 448; }
+.s2 { top: 6%; left: 42%; width: 44%; aspect-ratio: 1280 / 285; }
+.s3 { top: 30%; right: 3%; width: 18%; aspect-ratio: 1; }
+.s4 { top: 46%; left: 18%; width: 46%; aspect-ratio: 1280 / 285; }
+.s5 { bottom: 6%; left: 3%; width: 16%; aspect-ratio: 1; }
+.s6 { bottom: 10%; right: 12%; width: 32%; aspect-ratio: 920 / 448; }
+
+.lamp {
+  position: absolute;
+  left: 62%;
+  top: 45%;
+  width: 400vmax;
+  height: 400vmax;
+  translate: -50% -50%;
+  background: radial-gradient(
+    circle at center,
+    rgb(14 13 11 / 0.15) 0,
+    rgb(14 13 11 / 0.35) 4vmax,
+    rgb(14 13 11 / 0.9) 14vmax,
+    var(--ink) 26vmax
+  );
+  pointer-events: none;
+}
+
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .lamp {
+    left: 0;
+    top: 0;
+    will-change: transform;
+  }
+}
+
+/* ---------- Content ---------- */
+.content {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 2rem) var(--gutter) clamp(2rem, 5vh, 3.5rem);
+  pointer-events: none;
+}
+
+.content a,
+.content address {
+  pointer-events: auto;
+}
+
+.kicker {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  color: var(--muted-on-dark);
+}
+
+.kickerIndex {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0;
+  color: var(--signal);
+}
+
+.title {
+  align-self: center;
+  font-size: clamp(4rem, 1rem + 13vw, 15rem);
+  font-weight: 800;
+  line-height: 0.84;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 72;
+  text-transform: uppercase;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  padding-bottom: 0.04em;
+}
+
+.line > span {
+  display: block;
+}
+
+.line:last-child {
+  text-align: right;
+}
+
+.line :global(.serif) {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.03em;
+  color: var(--signal);
+  font-size: 1.22em;
+  line-height: 0.8;
+  padding-right: 0.05em;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2rem 4rem;
+}
+
+.sub {
+  max-width: 34ch;
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+  color: rgb(237 232 223 / 0.8);
+}
+
+.actions {
+  display: grid;
+  justify-items: end;
+  gap: 1.25rem;
+}
+
+.call {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  column-gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--signal);
+  color: var(--ink);
+  transition: background 0.4s ease;
+}
+
+.call:hover {
+  background: var(--bone);
+}
+
+.callLabel {
+  grid-column: 1;
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.callNumber {
+  grid-column: 1;
+  font-size: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 85;
+  font-variant-numeric: tabular-nums;
+}
+
+.callArrow {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-size: 2rem;
+  line-height: 1;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.call:hover .callArrow {
+  transform: translate(0.2rem, -0.2rem) rotate(45deg);
+}
+
+.address {
+  font-style: normal;
+  text-align: right;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--muted-on-dark);
+}
+
+@media (max-width: 767.98px) {
+  .title {
+    font-size: 17vw;
+  }
+
+  .bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    justify-items: stretch;
+  }
+
+  .address {
+    text-align: left;
+  }
+
+  .s2,
+  .s4 {
+    width: 80%;
+  }
+
+  .s1,
+  .s6 {
+    width: 56%;
+  }
+
+  .s3,
+  .s5 {
+    width: 34%;
+  }
+}

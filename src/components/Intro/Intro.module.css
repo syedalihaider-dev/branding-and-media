@@ -1,0 +1,393 @@
+.intro {
+  position: relative;
+  z-index: 2; /* slides over the pinned hero */
+  background: var(--bone);
+  color: var(--ink);
+}
+
+.pin {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 1.75rem;
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) 2rem;
+  background: var(--bone);
+  color: var(--ink);
+  overflow: clip;
+}
+
+/* ---------- Head ---------- */
+.head {
+  display: grid;
+  grid-template-columns: minmax(14rem, 24rem) 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.kicker {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding-top: 0.6rem;
+}
+
+.kickerIndex {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0;
+  color: var(--signal);
+}
+
+.headline {
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 85;
+  max-width: 16ch;
+}
+
+.headline em {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Body ---------- */
+.body {
+  display: grid;
+  grid-template-columns: minmax(14rem, 24rem) 1fr;
+  gap: 2rem;
+  min-height: 0;
+}
+
+.rail {
+  position: relative;
+  align-self: end;
+  display: grid;
+  gap: 2rem;
+}
+
+.stage {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 22rem;
+}
+
+.stageIndex {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--signal);
+}
+
+.stageTitle {
+  font-size: clamp(2rem, 1.4rem + 1.6vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.stageCopy {
+  font-size: var(--fs-body);
+  line-height: 1.45;
+  opacity: 0.75;
+}
+
+.canvas {
+  position: relative;
+  min-height: 60vh;
+  container-type: inline-size;
+}
+
+/* Name block — centred in canvas */
+.name {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1.25rem;
+}
+
+.idea {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -60%;
+  font-size: clamp(3rem, 11cqi, 9rem);
+  line-height: 1;
+  white-space: nowrap;
+  display: none;
+}
+
+.scribble {
+  width: 100%;
+  height: 0.28em;
+  margin-top: -0.05em;
+  overflow: visible;
+}
+
+.scribble path {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 3;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.typeset {
+  display: flex;
+  align-items: center;
+  gap: 0.18em;
+  font-size: clamp(2.75rem, 12.5cqi, 11rem);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wdth" 100;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transform-origin: 50% 50%;
+  position: relative;
+}
+
+.typeWord {
+  display: inline-flex;
+  overflow: clip;
+  overflow-clip-margin: 0.06em;
+  padding-block: 0.04em;
+}
+
+.typeChar {
+  display: inline-block;
+}
+
+/* Hangs left of the word so the name stays optically centred. */
+.monogram {
+  position: absolute;
+  right: calc(100% + 0.16em);
+  top: 50%;
+  translate: 0 -50%;
+  display: inline-grid;
+  place-items: center;
+  grid-auto-flow: column;
+  width: 0.92em;
+  height: 0.92em;
+  border: 0.06em solid currentColor;
+  border-radius: 50%;
+  font-size: 0.82em;
+  letter-spacing: 0;
+}
+
+.monogram span {
+  font-size: 0.5em;
+  font-weight: 800;
+}
+
+.monogram i {
+  font-style: normal;
+  font-size: 0.5em;
+  color: var(--signal);
+}
+
+.lockupMeta {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.swatches {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+
+.swatches i {
+  width: 0.9rem;
+  height: 0.9rem;
+  outline: 1px solid currentColor;
+  outline-offset: -1px;
+}
+
+/* Strategy guides */
+.guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: none;
+}
+
+.guides span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--signal);
+  opacity: 0.55;
+  transform-origin: 0 50%;
+}
+
+.guides .vGuide {
+  top: 0;
+  bottom: 0;
+  left: auto;
+  right: auto;
+  width: 1px;
+  height: auto;
+  transform-origin: 50% 0;
+}
+
+.note,
+.channel {
+  position: absolute;
+  display: none;
+  white-space: nowrap;
+}
+
+.note {
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.noteDot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--signal);
+}
+
+.channel {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 1rem + 1.6vw, 2.75rem);
+  line-height: 1;
+  color: var(--signal);
+}
+
+.progress {
+  display: none;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  max-width: 24rem;
+}
+
+.progress span {
+  height: 2px;
+  background: rgb(127 120 110 / 0.3);
+  overflow: clip;
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  background: var(--signal);
+  transform-origin: 0 50%;
+}
+
+/* ---------- Staged layout: only when motion + JS are available ---------- */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .pin {
+    height: 100svh;
+  }
+
+  .rail {
+    display: block;
+    min-height: 13rem;
+  }
+
+  .stage {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .idea {
+    display: block;
+  }
+
+  .guides {
+    display: block;
+  }
+
+  .note {
+    display: inline-flex;
+  }
+
+  .channel {
+    display: block;
+  }
+
+  .progress {
+    display: grid;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 899.98px) {
+  .head {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 1rem;
+  }
+
+  .canvas {
+    order: -1;
+    min-height: 42svh;
+  }
+
+  .rail {
+    align-self: start;
+  }
+
+  .note:nth-of-type(n + 3) {
+    display: none;
+  }
+
+  /* Inline positions are tuned for desktop; pin notes to the edges here. */
+  .note:nth-of-type(1) {
+    left: 0 !important;
+  }
+
+  .note:nth-of-type(2) {
+    left: auto !important;
+    right: 0;
+  }
+
+  .note {
+    font-size: 0.625rem;
+  }
+
+  .typeset {
+    font-size: clamp(2.25rem, 12cqi, 6rem);
+  }
+
+  .lockupMeta {
+    letter-spacing: 0.14em;
+  }
+}
+
+@media (max-width: 899.98px) and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .rail {
+    min-height: 10.5rem;
+  }
+
+  .stageCopy {
+    font-size: 0.95rem;
+  }
+}

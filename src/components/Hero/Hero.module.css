@@ -1,0 +1,319 @@
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 34rem;
+  background: var(--ink);
+  color: var(--bone);
+  z-index: 0;
+}
+
+.stage {
+  position: relative;
+  height: 100svh;
+  min-height: 34rem;
+  overflow: clip;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+/* ---------- Visual layer ---------- */
+.visual {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.6s ease 0.3s;
+}
+
+.canvas[data-ready="true"] {
+  opacity: 1;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 80% at 50% 45%, transparent 30%, rgb(14 13 11 / 0.85) 100%),
+    linear-gradient(to bottom, rgb(14 13 11 / 0.6), transparent 22%, transparent 70%, rgb(14 13 11 / 0.9));
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Fallback still-life (phones / no WebGL / reduced motion) */
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+.hero[data-webgl="off"] .fallback {
+  display: block;
+}
+
+@media (max-width: 767.98px) {
+  .fallback {
+    display: block;
+  }
+}
+
+@media (scripting: none) {
+  .fallback {
+    display: block;
+  }
+}
+
+.strip {
+  position: absolute;
+  overflow: clip;
+  opacity: 0.55;
+  filter: saturate(0.7);
+  animation: stripIn 1.8s var(--ease-out) both;
+}
+
+.strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stripA {
+  top: 14%;
+  left: -6%;
+  width: 72%;
+  aspect-ratio: 1280 / 285;
+  animation-delay: 0.3s;
+}
+
+.stripB {
+  top: 46%;
+  right: -12%;
+  width: 64%;
+  aspect-ratio: 1280 / 285;
+  animation-delay: 0.45s;
+}
+
+.stripC {
+  bottom: 9%;
+  left: 8%;
+  width: 58%;
+  aspect-ratio: 1280 / 285;
+  animation-delay: 0.6s;
+}
+
+@keyframes stripIn {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ---------- Title ---------- */
+.title {
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  display: grid;
+  padding-inline: var(--gutter);
+  padding-top: calc(var(--header-h) + 2vh);
+  font-size: min(19.4vw, 34vh);
+  font-weight: 800;
+  font-variation-settings: "wdth" 72;
+  line-height: 0.8;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.lineA,
+.lineB {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.1em;
+  padding-block: 0.04em;
+}
+
+.lineB {
+  justify-self: end;
+  margin-top: -0.02em;
+}
+
+.lineInner {
+  display: block;
+}
+
+.char {
+  display: inline-block;
+  animation: rise 1.4s var(--ease-out) both;
+  animation-delay: calc(0.15s + var(--i) * 0.055s);
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.amp {
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  translate: -62% -38%;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.45em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--signal);
+  transform-origin: 50% 55%;
+}
+
+.ampInner {
+  display: block;
+  animation: ampIn 1.8s var(--ease-out) 0.55s both;
+}
+
+@keyframes ampIn {
+  from {
+    opacity: 0;
+    transform: scale(0.4) rotate(-30deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Footer row ---------- */
+.foot {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2rem;
+  padding: 0 var(--gutter) clamp(1.25rem, 3vh, 2.25rem);
+}
+
+.foot > * {
+  animation: footIn 1.4s var(--ease-out) 0.9s both;
+}
+
+@keyframes footIn {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+
+.statement {
+  max-width: 30ch;
+  font-size: var(--fs-lead);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+.statement em {
+  color: var(--signal);
+  font-size: 1.08em;
+}
+
+.meta {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--muted-on-dark);
+}
+
+.plus {
+  color: var(--signal);
+}
+
+.cue {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  color: var(--muted-on-dark);
+}
+
+.cueLine {
+  position: relative;
+  width: 1px;
+  height: 3.25rem;
+  background: var(--line-on-dark);
+  overflow: clip;
+}
+
+.cueLine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bone);
+  animation: cue 2.2s var(--ease-in-out) infinite;
+}
+
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@media (max-width: 899.98px) {
+  .foot {
+    grid-template-columns: 1fr auto;
+  }
+
+  .meta {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .title {
+    align-self: center;
+    font-size: 19vw;
+    line-height: 0.84;
+  }
+
+  .amp {
+    font-size: 1.6em;
+  }
+
+  .statement {
+    font-size: 1.2rem;
+    max-width: 22ch;
+  }
+
+  .stripA {
+    top: 13%;
+    width: 86%;
+  }
+
+  .stripB {
+    top: 58%;
+    width: 80%;
+  }
+
+  .stripC {
+    bottom: auto;
+    top: 66%;
+    left: -10%;
+    width: 70%;
+  }
+}

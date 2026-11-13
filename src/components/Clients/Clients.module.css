@@ -1,0 +1,235 @@
+.clients {
+  position: relative;
+  z-index: 2;
+  background: var(--bone);
+  color: var(--ink);
+  padding-block: var(--section-pad);
+  overflow: clip;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(14rem, 24rem) 1fr;
+  gap: 2rem;
+  padding-inline: var(--gutter);
+  margin-bottom: clamp(4rem, 8vw, 8rem);
+}
+
+.kicker {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding-top: 0.8rem;
+}
+
+.kickerIndex {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0;
+  color: var(--signal);
+}
+
+.title {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 78;
+  text-transform: uppercase;
+}
+
+.title em {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  color: var(--signal);
+}
+
+/* ---------- Press marquee ---------- */
+.press {
+  border-block: 1px solid var(--line-on-light);
+  padding-block: 1.5rem;
+}
+
+.pressLabel {
+  padding-inline: var(--gutter);
+  margin-bottom: 1rem;
+  color: var(--muted-on-light);
+}
+
+.row {
+  overflow: clip;
+}
+
+.rowInner {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.pressItem {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  padding-right: clamp(1.25rem, 3vw, 3rem);
+  font-size: clamp(2.75rem, 1rem + 6vw, 7.5rem);
+  line-height: 1.08;
+  white-space: nowrap;
+}
+
+.pressSans {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.pressSep {
+  font-size: 0.35em;
+  color: var(--signal);
+}
+
+/* ---------- Client wall ---------- */
+.wallWrap {
+  display: grid;
+  grid-template-columns: minmax(14rem, 24rem) 1fr;
+  gap: 2rem;
+  padding: clamp(4rem, 9vw, 9rem) var(--gutter);
+}
+
+.wallLabel {
+  padding-top: 0.6rem;
+  color: var(--muted-on-light);
+  max-width: 16ch;
+}
+
+.wall {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15em 0.5em;
+  font-size: clamp(1.9rem, 1rem + 3vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-variation-settings: "wdth" 82;
+}
+
+.wall li {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.wall li:not(:last-child)::after {
+  content: "/";
+  margin-left: 0.5em;
+  font-weight: 300;
+  color: var(--signal);
+}
+
+.wall sup {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.32em;
+  letter-spacing: 0;
+  vertical-align: super;
+  margin-right: 0.25em;
+  color: var(--muted-on-light);
+}
+
+/* ---------- Testimonials ---------- */
+.voices {
+  display: grid;
+  grid-template-columns: minmax(14rem, 24rem) 1fr;
+  gap: 2rem;
+  padding-inline: var(--gutter);
+}
+
+.voicesHead {
+  align-self: start;
+  position: sticky;
+  top: calc(var(--header-h) + 2rem);
+  display: grid;
+  gap: 1rem;
+}
+
+.voicesTitle {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wdth" 78;
+  text-transform: uppercase;
+}
+
+.voicesTitle em {
+  font-weight: 400;
+  text-transform: none;
+  color: var(--signal);
+}
+
+.reviews {
+  max-width: 22ch;
+  font-size: var(--fs-small);
+  color: var(--muted-on-light);
+}
+
+.quotes {
+  display: grid;
+  gap: clamp(4rem, 8vw, 8rem);
+}
+
+.quote {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 50rem;
+}
+
+.quote:nth-child(even) {
+  justify-self: end;
+}
+
+.quoteText {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 1rem + 2.4vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: pretty;
+}
+
+.cite {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-on-light);
+}
+
+.citeName {
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+.citeContext {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-on-light);
+}
+
+@media (max-width: 899.98px) {
+  .head,
+  .wallWrap,
+  .voices {
+    grid-template-columns: 1fr;
+  }
+
+  .voicesHead {
+    position: static;
+  }
+
+  .quote:nth-child(even) {
+    justify-self: start;
+  }
+}

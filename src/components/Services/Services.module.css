@@ -1,0 +1,548 @@
+.services {
+  position: relative;
+  z-index: 2;
+  background: var(--ink);
+}
+
+.pin {
+  position: relative;
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  position: absolute;
+  z-index: 20;
+  top: calc(var(--header-h) + 0.75rem);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  color: var(--bone);
+  transition: color 0.4s ease;
+}
+
+.hud[data-theme="light"],
+.hud[data-theme="signal"] {
+  color: var(--ink);
+}
+
+.hudTitle {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.hudIndex {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.hudCount {
+  font-variant-numeric: tabular-nums;
+}
+
+.hudCurrent {
+  display: inline-block;
+  min-width: 2ch;
+}
+
+/* ---------- Panels (static default: stacked) ---------- */
+.panel {
+  --w-bg: var(--ink);
+  --w-fg: var(--bone);
+  --w-muted: rgb(237 232 223 / 0.62);
+  --w-accent: var(--signal);
+  --w-line: rgb(237 232 223 / 0.18);
+
+  position: relative;
+  min-height: 100svh;
+  background: var(--w-bg);
+  color: var(--w-fg);
+  overflow: clip;
+}
+
+.inner {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  column-gap: var(--gutter);
+  padding: calc(var(--header-h) + 3.5rem) var(--gutter) clamp(1.5rem, 4vh, 3rem);
+  transform-origin: 50% 40%;
+}
+
+.visual {
+  grid-column: 7 / -1;
+  grid-row: 1;
+  justify-self: center;
+  width: min(100%, 34rem);
+  min-height: 12rem;
+  padding-block: 1rem;
+  display: grid;
+  place-items: center;
+  /* Visuals size themselves against whatever space the word leaves. */
+  container-type: size;
+}
+
+.word {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  line-height: 0.84;
+  white-space: nowrap;
+}
+
+.wordInner {
+  display: inline-flex;
+  overflow: clip;
+  overflow-clip-margin: 0.1em;
+  padding-block: 0.06em;
+  font-size: clamp(3rem, 12vw, 14rem);
+  text-transform: uppercase;
+}
+
+.char {
+  display: inline-block;
+  transform-origin: 50% 60%;
+}
+
+.info {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: grid;
+  grid-template-columns: auto minmax(0, 26rem) minmax(0, 1fr);
+  align-items: start;
+  gap: 1.25rem 2.5rem;
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--w-line);
+}
+
+.index {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--w-accent);
+}
+
+.lede {
+  font-size: var(--fs-lead);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0;
+  justify-content: flex-end;
+  font-size: var(--fs-small);
+  color: var(--w-muted);
+}
+
+.items li {
+  white-space: nowrap;
+}
+
+.items li:not(:last-child)::after {
+  content: "/";
+  padding-inline: 0.7em;
+  opacity: 0.5;
+}
+
+/* ---------- Worlds ---------- */
+.panel[data-world="branding"] .wordInner {
+  font-weight: 800;
+  font-variation-settings: "wdth" 100;
+  letter-spacing: -0.04em;
+}
+
+.panel[data-world="strategy"] {
+  --w-bg: var(--bone);
+  --w-fg: var(--ink);
+  --w-muted: rgb(14 13 11 / 0.62);
+  --w-line: rgb(14 13 11 / 0.16);
+}
+
+.panel[data-world="strategy"] .wordInner {
+  font-weight: 200;
+  font-variation-settings: "wdth" 62;
+  letter-spacing: -0.02em;
+}
+
+.panel[data-world="marketing"] {
+  --w-bg: var(--signal);
+  --w-fg: var(--ink);
+  --w-muted: rgb(14 13 11 / 0.72);
+  --w-accent: var(--ink);
+  --w-line: rgb(14 13 11 / 0.22);
+}
+
+.panel[data-world="marketing"] .wordInner {
+  font-weight: 900;
+  font-variation-settings: "wdth" 125;
+  letter-spacing: -0.05em;
+}
+
+.panel[data-world="media"] {
+  --w-bg: #070605;
+}
+
+.panel[data-world="media"] .wordInner {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+
+.panel[data-world="communications"] {
+  --w-bg: var(--paper);
+  --w-fg: var(--ink);
+  --w-muted: rgb(14 13 11 / 0.66);
+  --w-line: rgb(14 13 11 / 0.18);
+}
+
+.panel[data-world="communications"] .wordInner {
+  font-weight: 600;
+  font-variation-settings: "wdth" 75;
+  letter-spacing: -0.03em;
+}
+
+.panel[data-world="content"] {
+  --w-bg: var(--oxblood);
+  --w-fg: var(--blush);
+  --w-muted: rgb(243 201 184 / 0.7);
+  --w-line: rgb(243 201 184 / 0.2);
+}
+
+.panel[data-world="content"] .wordInner {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.03em;
+}
+
+.panel[data-world="technology"] {
+  --w-bg: #0b0b0c;
+  background-image: radial-gradient(rgb(237 232 223 / 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.panel[data-world="technology"] .wordInner {
+  font-weight: 200;
+  font-variation-settings: "wdth" 112;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Visuals ---------- */
+.vBranding {
+  position: relative;
+  width: 100%;
+  height: 100cqh;
+  display: grid;
+  place-items: center;
+}
+
+.chip {
+  position: absolute;
+  height: min(90cqh, 15rem);
+  aspect-ratio: 3 / 4.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.9rem;
+  transform-origin: 50% 120%;
+  box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.6);
+}
+
+.chipName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.chipHex {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+}
+
+.vStrategy {
+  width: min(100cqw, 100cqh * 4 / 3);
+  height: auto;
+  overflow: visible;
+}
+
+.grid line {
+  stroke: rgb(14 13 11 / 0.12);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.plot {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.target {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.targetDot {
+  fill: var(--signal);
+}
+
+.plotLabel {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  fill: var(--ink);
+}
+
+.vMarketing {
+  width: min(100cqw, 100cqh, 26rem);
+  aspect-ratio: 1;
+}
+
+.rings {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.rings circle {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.ringText {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  fill: var(--ink);
+}
+
+.vMedia {
+  width: min(100cqw - 20px, (100cqh - 20px) * 16 / 9);
+}
+
+.monitor {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  outline: 1px solid rgb(237 232 223 / 0.18);
+  outline-offset: 10px;
+}
+
+.reel {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.onAir {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.5rem;
+  background: rgb(0 0 0 / 0.55);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.onAir i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--signal);
+  animation: blink 1.4s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.vComms {
+  position: relative;
+  width: 100%;
+  height: 100cqh;
+  display: grid;
+  place-items: center;
+  perspective: 900px;
+}
+
+.doc {
+  position: absolute;
+  height: min(88cqh, 17rem);
+  aspect-ratio: 1 / 1.38;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding: 1rem;
+  background: var(--bone);
+  color: var(--ink);
+  box-shadow: 0 24px 50px -24px rgb(14 13 11 / 0.55);
+  translate: calc((var(--i) - 1) * -1.2rem) calc((var(--i) - 1) * -0.6rem);
+}
+
+.doc:nth-child(2) {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.doc:nth-child(3) {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+.docRule {
+  width: 2rem;
+  height: 3px;
+  background: currentColor;
+  margin-bottom: auto;
+}
+
+.docTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-variation-settings: "wdth" 80;
+}
+
+.docSub {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.vContent {
+  width: 100%;
+  height: 100cqh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  overflow: clip;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+.stream {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: clamp(1.4rem, 1rem + 1.4vw, 2.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.stream:nth-child(2) {
+  text-align: right;
+  color: var(--signal);
+}
+
+.vTech {
+  width: min(100cqw, 100cqh * 400 / 280);
+  height: auto;
+  overflow: visible;
+}
+
+.vTech [data-wire] > * {
+  fill: none;
+  stroke: rgb(237 232 223 / 0.7);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.cursor {
+  fill: var(--signal);
+  animation: blink 1s steps(2, start) infinite;
+}
+
+/* ---------- Staged layout (JS + motion) ---------- */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .pin {
+    height: 100svh;
+    overflow: clip;
+  }
+
+  .panel {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+  }
+
+  .panel + .panel {
+    will-change: clip-path;
+  }
+
+  .inner {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .word {
+    white-space: nowrap;
+  }
+}
+
+/* ---------- Tablet / Mobile ---------- */
+@media (max-width: 899.98px) {
+  .inner {
+    grid-template-rows: 1fr auto auto;
+    padding-top: calc(var(--header-h) + 3rem);
+  }
+
+  .visual {
+    grid-column: 1 / -1;
+    width: min(100%, 26rem);
+  }
+
+  .info {
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem 1rem;
+    padding-top: 1rem;
+  }
+
+  .items {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    font-size: 0.78rem;
+  }
+
+  .lede {
+    font-size: 1.1rem;
+  }
+
+
+  .stream {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 899.98px) and (max-height: 700px) {
+  .items {
+    display: none;
+  }
+}

@@ -1,0 +1,219 @@
+/* ==========================================================================
+   Branding & Media — design tokens + base
+   ========================================================================== */
+
+:root {
+  /* Palette: warm ink / bone, one electric accent */
+  --ink: #0e0d0b;
+  --ink-2: #181613;
+  --ink-3: #26231f;
+  --bone: #ede8df;
+  --bone-2: #ddd5c7;
+  --paper: #d6cdbd;
+  --signal: #ff4a1c;
+  --oxblood: #34110d;
+  --blush: #f3c9b8;
+
+  --fg: var(--bone);
+  --bg: var(--ink);
+  --muted-on-dark: rgb(237 232 223 / 0.62);
+  --muted-on-light: rgb(14 13 11 / 0.62);
+  --line-on-dark: rgb(237 232 223 / 0.16);
+  --line-on-light: rgb(14 13 11 / 0.16);
+
+  /* Type */
+  --font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-instrument), "Times New Roman", serif;
+
+  --fs-micro: 0.6875rem; /* 11px labels */
+  --fs-small: 0.8125rem;
+  --fs-body: clamp(1rem, 0.94rem + 0.25vw, 1.125rem);
+  --fs-lead: clamp(1.25rem, 1.05rem + 0.9vw, 1.875rem);
+  --fs-h3: clamp(2rem, 1.4rem + 2.8vw, 4.25rem);
+  --fs-h2: clamp(2.75rem, 1.6rem + 5.4vw, 7.5rem);
+  --fs-display: clamp(4.5rem, 1rem + 15vw, 17rem);
+
+  /* Space */
+  --gutter: clamp(1rem, 0.6rem + 1.8vw, 2.5rem);
+  --section-pad: clamp(6rem, 4rem + 8vw, 12rem);
+  --header-h: 4.25rem;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  color-scheme: dark;
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--ink);
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  font-variation-settings: "wdth" 100;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 4px;
+}
+
+/* ---------- Lenis ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* ---------- Utilities ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background: var(--signal);
+  color: var(--ink);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* Small uppercase label used throughout */
+.label {
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 100;
+}
+
+/* Masked line: children slide within */
+.mask {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.08em;
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-variation-settings: normal;
+}
+
+.italic {
+  font-style: italic;
+}
+
+/* Split text primitives (see components/ui/Split.tsx) */
+.split-word,
+.split-char {
+  display: inline-block;
+  will-change: auto;
+}
+
+.split-word {
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
