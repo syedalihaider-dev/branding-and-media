@@ -86,7 +86,12 @@ const organizationJsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${archivo.variable} ${instrument.variable}`}>
+    <html
+      lang="en"
+      className={`${archivo.variable} ${instrument.variable}`}
+      // The preloader boot script tags <html> before hydration.
+      suppressHydrationWarning
+    >
       <body>
         <a className="skip-link" href="#main">
           Skip to content

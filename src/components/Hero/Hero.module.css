@@ -317,3 +317,22 @@
     width: 70%;
   }
 }
+
+/* ---------- Preloader hand-off ----------
+   When the opening runs, its wordmark flies into this headline, so the
+   headline skips its own entrance and stays hidden until the words land.
+   The foot and stills wait for the curtain before playing their entrance. */
+:global(html[data-preloader]) .char,
+:global(html[data-preloader]) .ampInner {
+  animation: none;
+}
+
+:global(html[data-preloader="active"]) .title,
+:global(html[data-preloader="exit"]) .title {
+  visibility: hidden;
+}
+
+:global(html[data-preloader="active"]) .foot > *,
+:global(html[data-preloader="active"]) .strip {
+  animation-play-state: paused;
+}

@@ -1,0 +1,241 @@
+.film {
+  position: relative;
+  z-index: 2;
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.stage {
+  position: relative;
+  height: 100svh;
+  min-height: 34rem;
+  overflow: clip;
+}
+
+/* ---------- Screen: video + knockout ---------- */
+.screen {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--ink-2);
+}
+
+/* `darken` keeps ink where the layer is ink and lets the footage through
+   wherever the layer is white — the letters become windows. */
+.knock {
+  position: absolute;
+  inset: 0;
+  display: none;
+  place-items: center;
+  mix-blend-mode: darken;
+  pointer-events: none;
+}
+
+.knockBg {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+}
+
+.word {
+  position: relative;
+  display: flex;
+  font-size: min(40vw, 84vh);
+  font-weight: 900;
+  font-variation-settings: "wdth" 70;
+  line-height: 0.76;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+  translate: 0 4%;
+}
+
+.letter {
+  display: block;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgb(14 13 11 / 0.82), rgb(14 13 11 / 0.2) 45%, transparent 70%),
+    linear-gradient(to bottom, rgb(14 13 11 / 0.55), transparent 22%);
+  pointer-events: none;
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--header-h) + 0.75rem);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1.5rem;
+  color: var(--bone);
+  pointer-events: none;
+}
+
+.hud p {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.rec {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 4px rgb(255 74 28 / 0.18);
+  animation: rec 1.6s steps(2, jump-none) infinite;
+}
+
+@keyframes rec {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.hudRight {
+  display: grid;
+  justify-items: end;
+  gap: 0.6rem;
+}
+
+.tc {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-on-dark);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.8rem 0.45rem 0.65rem;
+  border: 1px solid rgb(237 232 223 / 0.3);
+  border-radius: 999px;
+  background: rgb(14 13 11 / 0.35);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.toggle:hover {
+  border-color: var(--bone);
+  background: rgb(14 13 11 / 0.6);
+}
+
+.toggleIcon {
+  position: relative;
+  width: 0.55rem;
+  height: 0.65rem;
+}
+
+/* Pause bars */
+.toggleIcon[data-playing="true"] {
+  border-inline: 2px solid currentColor;
+  width: 0.5rem;
+}
+
+/* Play triangle */
+.toggleIcon[data-playing="false"] {
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* ---------- Copy ---------- */
+.copy {
+  position: absolute;
+  z-index: 3;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(2rem, 7vh, 4.5rem);
+  display: grid;
+  gap: 1.5rem;
+  pointer-events: none;
+}
+
+.title {
+  font-size: clamp(3rem, 0.8rem + 7.4vw, 9.5rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 76;
+  text-transform: uppercase;
+}
+
+.title em {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  color: var(--signal);
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+}
+
+.line > span {
+  display: block;
+}
+
+.sub {
+  max-width: 30ch;
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: rgb(237 232 223 / 0.86);
+}
+
+/* ---------- Staged (JS + motion) ---------- */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .knock {
+    display: grid;
+  }
+
+  .letter {
+    will-change: transform;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .word {
+    font-size: 33vw;
+  }
+
+  .hud {
+    flex-direction: column;
+  }
+
+  .hudRight {
+    justify-items: start;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .sub {
+    font-size: 1.1rem;
+  }
+}

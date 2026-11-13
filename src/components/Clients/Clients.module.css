@@ -1,28 +1,40 @@
 .clients {
   position: relative;
   z-index: 2;
-  background: var(--bone);
-  color: var(--ink);
-  padding-block: var(--section-pad);
-  overflow: clip;
+  background: var(--ink);
+  color: var(--bone);
 }
 
-.head {
+/* =========================================================================
+   Static default (no JS / reduced motion / no WebGL): an editorial index
+   ========================================================================= */
+.stage {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(14rem, 24rem) 1fr;
-  gap: 2rem;
-  padding-inline: var(--gutter);
-  margin-bottom: clamp(4rem, 8vw, 8rem);
+  gap: clamp(3rem, 7vw, 6rem);
+  padding: var(--section-pad) var(--gutter);
+}
+
+.canvas,
+.vignette,
+.rail {
+  display: none;
+}
+
+.intro {
+  display: grid;
+  gap: 1.75rem;
 }
 
 .kicker {
   display: flex;
   gap: 0.75rem;
   align-items: baseline;
-  padding-top: 0.8rem;
+  color: var(--muted-on-dark);
 }
 
-.kickerIndex {
+.kickerIndex,
+.stationIndex {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 1rem;
@@ -46,190 +58,369 @@
   color: var(--signal);
 }
 
-/* ---------- Press marquee ---------- */
-.press {
-  border-block: 1px solid var(--line-on-light);
-  padding-block: 1.5rem;
-}
-
-.pressLabel {
-  padding-inline: var(--gutter);
-  margin-bottom: 1rem;
-  color: var(--muted-on-light);
-}
-
-.row {
+.line {
+  display: block;
   overflow: clip;
+  overflow-clip-margin: 0.12em;
 }
 
-.rowInner {
+.line > span {
+  display: block;
+}
+
+.lede {
+  max-width: 34ch;
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+  color: var(--muted-on-dark);
+}
+
+/* Stations as an index */
+.stations {
+  display: grid;
+}
+
+.station {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.75rem 3rem;
+  padding-block: 2.5rem;
+  border-top: 1px solid var(--line-on-dark);
+}
+
+.stationLabel {
+  grid-column: 1;
   display: flex;
-  width: max-content;
-  will-change: transform;
+  gap: 0.75rem;
+  align-items: baseline;
+  color: var(--muted-on-dark);
 }
 
-.pressItem {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(1.25rem, 3vw, 3rem);
-  padding-right: clamp(1.25rem, 3vw, 3rem);
-  font-size: clamp(2.75rem, 1rem + 6vw, 7.5rem);
-  line-height: 1.08;
-  white-space: nowrap;
-}
-
-.pressSans {
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  font-variation-settings: "wdth" 70;
-  text-transform: uppercase;
-}
-
-.pressSep {
-  font-size: 0.35em;
-  color: var(--signal);
-}
-
-/* ---------- Client wall ---------- */
-.wallWrap {
-  display: grid;
-  grid-template-columns: minmax(14rem, 24rem) 1fr;
-  gap: 2rem;
-  padding: clamp(4rem, 9vw, 9rem) var(--gutter);
-}
-
-.wallLabel {
-  padding-top: 0.6rem;
-  color: var(--muted-on-light);
-  max-width: 16ch;
-}
-
-.wall {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.15em 0.5em;
-  font-size: clamp(1.9rem, 1rem + 3vw, 4.25rem);
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-variation-settings: "wdth" 82;
-}
-
-.wall li {
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.wall li:not(:last-child)::after {
-  content: "/";
-  margin-left: 0.5em;
-  font-weight: 300;
-  color: var(--signal);
-}
-
-.wall sup {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 0.32em;
-  letter-spacing: 0;
-  vertical-align: super;
-  margin-right: 0.25em;
-  color: var(--muted-on-light);
-}
-
-/* ---------- Testimonials ---------- */
-.voices {
-  display: grid;
-  grid-template-columns: minmax(14rem, 24rem) 1fr;
-  gap: 2rem;
-  padding-inline: var(--gutter);
-}
-
-.voicesHead {
-  align-self: start;
-  position: sticky;
-  top: calc(var(--header-h) + 2rem);
-  display: grid;
-  gap: 1rem;
-}
-
-.voicesTitle {
+.stationName {
+  grid-column: 1;
   font-size: var(--fs-h3);
   font-weight: 700;
   line-height: 0.95;
-  letter-spacing: -0.04em;
-  font-variation-settings: "wdth" 78;
+  letter-spacing: -0.035em;
+  font-variation-settings: "wdth" 80;
   text-transform: uppercase;
 }
 
-.voicesTitle em {
-  font-weight: 400;
-  text-transform: none;
-  color: var(--signal);
-}
-
-.reviews {
-  max-width: 22ch;
-  font-size: var(--fs-small);
-  color: var(--muted-on-light);
-}
-
-.quotes {
-  display: grid;
-  gap: clamp(4rem, 8vw, 8rem);
-}
-
-.quote {
-  display: grid;
-  gap: 1.5rem;
-  max-width: 50rem;
-}
-
-.quote:nth-child(even) {
-  justify-self: end;
-}
-
-.quoteText {
+.serifName {
   font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 1rem + 2.4vw, 3.5rem);
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-  text-wrap: pretty;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-transform: none;
 }
 
-.cite {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line-on-light);
+.still {
+  grid-column: 2;
+  grid-row: 1 / span 3;
 }
 
-.citeName {
-  font-size: var(--fs-body);
-  font-weight: 600;
+.still img {
+  width: 100%;
+  height: auto;
 }
 
-.citeContext {
+.quote,
+.detail {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+.station[data-kind="work"] .detail {
+  grid-column: 1;
+  grid-row: auto;
+}
+
+.quote p {
+  max-width: 34ch;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 1rem + 1.2vw, 2.1rem);
+  line-height: 1.15;
+}
+
+.detail {
   font-size: var(--fs-micro);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted-on-light);
+  color: var(--muted-on-dark);
 }
 
-@media (max-width: 899.98px) {
-  .head,
-  .wallWrap,
-  .voices {
+/* Finale */
+.finale {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line-on-dark);
+}
+
+.finaleLabel {
+  color: var(--muted-on-dark);
+}
+
+.press {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 2rem;
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variation-settings: "wdth" 80;
+}
+
+.press :global(.serif) {
+  font-weight: 400;
+  color: var(--signal);
+}
+
+.also,
+.reviews {
+  max-width: 60ch;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--muted-on-dark);
+}
+
+.also :global(.label) {
+  margin-right: 0.75rem;
+  color: var(--bone);
+}
+
+@media (max-width: 767.98px) {
+  .station {
     grid-template-columns: 1fr;
   }
 
-  .voicesHead {
-    position: static;
+  .still,
+  .quote,
+  .detail {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+/* =========================================================================
+   The gallery (JS + motion + WebGL)
+   ========================================================================= */
+.clients[data-webgl="on"] .stage {
+  display: block;
+  height: 100svh;
+  min-height: 34rem;
+  padding: 0;
+  overflow: clip;
+}
+
+.clients[data-webgl="on"] .canvas {
+  display: block;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.clients[data-webgl="on"] .canvas[data-ready="true"] {
+  opacity: 1;
+}
+
+.clients[data-webgl="on"] .vignette {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(130% 90% at 50% 45%, transparent 45%, rgb(14 13 11 / 0.75) 100%),
+    linear-gradient(to top, rgb(14 13 11 / 0.85), transparent 30%);
+}
+
+/* Intro — over the hall's far end */
+.clients[data-webgl="on"] .intro {
+  position: absolute;
+  z-index: 2;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(6rem, 16vh, 10rem);
+  pointer-events: none;
+}
+
+/* Station placards — like the wall labels in a gallery */
+.clients[data-webgl="on"] .stations {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.clients[data-webgl="on"] .station {
+  position: absolute;
+  bottom: clamp(6.5rem, 15vh, 9rem);
+  left: var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+  width: min(34rem, calc(100% - 2 * var(--gutter)));
+  padding: 1.5rem 0 0;
+  border-top: 1px solid rgb(237 232 223 / 0.28);
+}
+
+.clients[data-webgl="on"] .station[data-side="right"] {
+  left: auto;
+  right: var(--gutter);
+}
+
+.clients[data-webgl="on"] .stationLabel,
+.clients[data-webgl="on"] .stationName,
+.clients[data-webgl="on"] .quote,
+.clients[data-webgl="on"] .detail {
+  grid-column: 1;
+  grid-row: auto;
+}
+
+.clients[data-webgl="on"] .stationName {
+  font-size: clamp(1.5rem, 1rem + 1.2vw, 2.4rem);
+}
+
+.clients[data-webgl="on"] .serifName {
+  font-size: clamp(1.75rem, 1.1rem + 1.4vw, 2.8rem);
+}
+
+.clients[data-webgl="on"] .quote p {
+  font-size: clamp(1.15rem, 0.95rem + 0.6vw, 1.55rem);
+  color: rgb(237 232 223 / 0.9);
+}
+
+.clients[data-webgl="on"] .still {
+  display: none;
+}
+
+/* Finale — sits inside the ring of press names */
+.clients[data-webgl="on"] .finale {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: min(30rem, calc(100% - 2 * var(--gutter)));
+  justify-items: center;
+  gap: 1rem;
+  padding: 0;
+  border: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.clients[data-webgl="on"] .press {
+  /* The ring renders the press names; keep them for assistive tech. */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.clients[data-webgl="on"] .finaleLabel {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+  letter-spacing: -0.02em;
+  text-transform: none;
+  line-height: 1;
+  color: var(--bone);
+}
+
+.clients[data-webgl="on"] .also {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.clients[data-webgl="on"] .also :global(.label) {
+  display: block;
+  margin: 0 0 0.4rem;
+  color: var(--signal);
+}
+
+/* Rail */
+.clients[data-webgl="on"] .rail {
+  display: grid;
+  position: absolute;
+  z-index: 2;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(1.25rem, 3vh, 2rem);
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.ticks {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ticks li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(237 232 223 / 0.36);
+  transition: color 0.4s ease;
+}
+
+.ticks li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.ticks li[data-on] {
+  color: var(--bone);
+}
+
+.ticks li[data-on]::before {
+  background: var(--signal);
+  box-shadow: 0 0 0 4px rgb(255 74 28 / 0.2);
+}
+
+.railLine {
+  display: block;
+  height: 1px;
+  background: var(--line-on-dark);
+}
+
+.railLine span {
+  display: block;
+  height: 100%;
+  background: var(--bone);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+@media (max-width: 767.98px) {
+  .clients[data-webgl="on"] .station,
+  .clients[data-webgl="on"] .station[data-side="right"] {
+    left: var(--gutter);
+    right: var(--gutter);
+    width: auto;
+    bottom: 4.75rem;
   }
 
-  .quote:nth-child(even) {
-    justify-self: start;
+  .clients[data-webgl="on"] .quote p {
+    font-size: 1.05rem;
+  }
+
+  .tickName {
+    display: none;
   }
 }

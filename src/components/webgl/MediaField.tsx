@@ -190,6 +190,9 @@ function Field({ items, compact }: { items: MediaItem[]; compact: boolean }) {
       t.anisotropy = Math.min(4, gl.capabilities.getMaxAnisotropy());
       t.needsUpdate = true;
     });
+    // Tell the preloader the opening frame's media is on the GPU.
+    window.__bmHeroMedia = true;
+    window.dispatchEvent(new Event("bm:hero-media"));
   }, [textures, gl]);
 
   useEffect(() => {

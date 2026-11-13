@@ -1,84 +1,134 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { gsap, ScrollTrigger, useGSAP, MQ } from "@/lib/gsap";
-import { scrollState } from "@/lib/scrollState";
+import { gsap, useGSAP, MQ } from "@/lib/gsap";
+import { galleryState, journey } from "./galleryState";
+
+function supportsWebGL() {
+  try {
+    const c = document.createElement("canvas");
+    return !!(c.getContext("webgl2") || c.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
 
 /**
- * Clients — momentum and attention.
- * Why: press names stream past like a news ticker that reacts to how fast
- * you move (fame is momentum); the client wall "lights up" name by name
- * as you read it; testimonials resolve word by word so they're read, not
- * skimmed.
+ * Gallery choreography. One pinned, scrubbed trigger writes the camera's
+ * journey position (galleryState.u) for the WebGL scene and swaps the HUD
+ * panel for whichever client is in front of you — DOM writes only, no
+ * React state while scrolling.
  */
-export function ClientsMotion({ children, className }: { children: ReactNode; className?: string }) {
+export function ClientsMotion({ children, className, id }: { children: ReactNode; className?: string; id?: string }) {
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
+      const section = ref.current!;
       const mm = gsap.matchMedia();
-      const q = gsap.utils.selector(ref);
+      const q = gsap.utils.selector(section);
 
-      mm.add(MQ.motion, () => {
-        // ── Velocity marquee — one ticker callback for both rows ──
-        const rows = q<HTMLElement>("[data-marquee]").map((row) => {
-          const inner = row.querySelector<HTMLElement>("[data-marquee-inner]")!;
-          return {
-            inner,
-            dir: Number(row.dataset.marquee),
-            x: 0,
-            setX: gsap.quickSetter(inner, "xPercent"),
-            setSkew: gsap.quickSetter(inner, "skewX", "deg"),
-          };
-        });
-        const wrap = gsap.utils.wrap(-50, 0);
-        let skew = 0;
-        const tick = (_t: number, dt: number) => {
-          const v = scrollState.velocity;
-          const speed = 0.012 + Math.min(Math.abs(v) * 0.004, 0.25);
-          const sign = v < -0.5 ? -1 : 1;
-          skew += (Math.max(-8, Math.min(8, v * -0.25)) - skew) * 0.1;
-          rows.forEach((r) => {
-            r.x = wrap(r.x - speed * r.dir * sign * (dt / 16.67));
-            r.setX(r.x);
-            r.setSkew(skew);
-          });
+      mm.add({ motion: MQ.motion, mobile: MQ.mobile }, (ctx) => {
+        const on = !!ctx.conditions?.motion && supportsWebGL();
+        section.dataset.webgl = on ? "on" : "off";
+        if (!on) return;
+        const mobile = !!ctx.conditions?.mobile;
+
+        const stations = q<HTMLElement>("[data-station]");
+        const ticks = q<HTMLElement>("[data-tick]");
+        const count = stations.length;
+        const intro = q("[data-gallery-intro]")[0];
+        const finale = q("[data-gallery-finale]")[0];
+        const progressBar = q("[data-gallery-progress]")[0];
+
+        gsap.set(stations, { autoAlpha: 0 });
+        gsap.set(finale, { autoAlpha: 0 });
+
+        const show = (el: HTMLElement) => {
+          gsap.killTweensOf(el);
+          gsap.set(el, { autoAlpha: 1 });
+          const name = el.querySelectorAll("[data-hud-name]");
+          const rest = el.querySelectorAll("[data-hud]");
+          gsap.fromTo(name, { yPercent: 110 }, { yPercent: 0, duration: 1.1, ease: "expo.out", overwrite: true });
+          gsap.fromTo(
+            rest,
+            { autoAlpha: 0, y: 18 },
+            { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.08, delay: 0.12, ease: "power3.out", overwrite: true },
+          );
         };
-        // Only run while the section is on screen.
-        ScrollTrigger.create({
-          trigger: ref.current,
-          start: "top bottom",
-          end: "bottom top",
-          onToggle: (self) => (self.isActive ? gsap.ticker.add(tick) : gsap.ticker.remove(tick)),
-        });
+        const hide = (el: HTMLElement) => {
+          gsap.to(el, { autoAlpha: 0, duration: 0.35, ease: "power2.in", overwrite: true });
+        };
 
-        // ── Client wall: names light up in reading order ──
+        let current = -2; // -1 intro, count finale, -2 nothing yet
+        const setPanel = (next: number) => {
+          if (next === current) return;
+          const prev = current;
+          current = next;
+          if (prev >= 0 && prev < count) hide(stations[prev]);
+          if (prev === -1) gsap.to(intro, { autoAlpha: 0, y: -24, duration: 0.5, ease: "power2.in", overwrite: true });
+          if (prev === count) gsap.to(finale, { autoAlpha: 0, duration: 0.4, overwrite: true });
+
+          if (next === -1) gsap.to(intro, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out", overwrite: true });
+          else if (next === count) {
+            gsap.set(finale, { autoAlpha: 1 });
+            gsap.fromTo(
+              finale.querySelectorAll("[data-finale-item]"),
+              { autoAlpha: 0, y: 20 },
+              { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.1, ease: "power3.out", overwrite: true },
+            );
+          } else if (next >= 0) show(stations[next]);
+          ticks.forEach((t, i) => t.toggleAttribute("data-on", i === next));
+        };
+
         gsap.fromTo(
-          q("[data-wall-item]"),
-          { opacity: 0.16 },
+          q("[data-intro-line]"),
+          { yPercent: 110 },
           {
-            opacity: 1,
+            yPercent: 0,
+            duration: 1.2,
             stagger: 0.1,
-            ease: "none",
-            scrollTrigger: { trigger: q("[data-wall]")[0], start: "top 80%", end: "bottom 45%", scrub: true },
+            ease: "power4.out",
+            scrollTrigger: { trigger: section, start: "top 70%" },
           },
         );
 
-        // ── Testimonials: words resolve as they cross the reading line ──
-        q<HTMLElement>("[data-quote]").forEach((quote) => {
-          gsap.fromTo(
-            quote.querySelectorAll("[data-word]"),
-            { opacity: 0.14 },
-            {
-              opacity: 1,
-              stagger: 0.05,
-              ease: "none",
-              scrollTrigger: { trigger: quote, start: "top 78%", end: "bottom 55%", scrub: true },
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => `+=${window.innerHeight * ((count + 1) * (mobile ? 0.62 : 0.75) + 0.6)}`,
+            pin: q("[data-gallery-stage]")[0],
+            scrub: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              const u = journey(self.progress, count);
+              galleryState.u = u;
+              gsap.set(progressBar, { scaleX: self.progress });
+              // Which panel belongs on screen?
+              // (-3 = between stations: the stage clears for the glide)
+              let next = -3;
+              if (u < 0.55) next = -1;
+              else if (u > count + 0.5) next = count;
+              else {
+                const i = Math.round(u - 1);
+                if (Math.abs(u - 1 - i) < 0.3) next = i;
+              }
+              setPanel(next);
             },
-          );
+            onLeaveBack: () => {
+              galleryState.u = 0;
+              setPanel(-1);
+            },
+          },
         });
+        setPanel(-1);
 
-        return () => gsap.ticker.remove(tick);
+        return () => {
+          galleryState.u = 0;
+          delete section.dataset.webgl;
+        };
       });
 
       return () => mm.revert();
@@ -87,7 +137,7 @@ export function ClientsMotion({ children, className }: { children: ReactNode; cl
   );
 
   return (
-    <section ref={ref} className={className} data-theme="light" aria-labelledby="clients-title">
+    <section ref={ref} id={id} className={className} data-theme="dark" aria-labelledby="clients-title">
       {children}
     </section>
   );
