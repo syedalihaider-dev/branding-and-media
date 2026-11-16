@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger, MQ } from "@/lib/gsap";
-import { setLenis } from "@/lib/smoothScroll";
+import { getLenis, setLenis } from "@/lib/smoothScroll";
 import { scrollState } from "@/lib/scrollState";
 
 /**
@@ -14,6 +15,8 @@ import { scrollState } from "@/lib/scrollState";
  * Reduced-motion users get native scrolling and no Lenis.
  */
 export function SmoothScroll() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const reduce = window.matchMedia(MQ.reduce).matches;
     let lenis: Lenis | null = null;
@@ -62,6 +65,18 @@ export function SmoothScroll() {
       setLenis(null);
     };
   }, []);
+
+  // New route: start at the top and re-measure every trigger once the
+  // incoming page has laid out (the previous page is kept hidden, not
+  // unmounted, so stale measurements would otherwise linger).
+  useEffect(() => {
+    getLenis()?.scrollTo(0, { immediate: true, force: true });
+    const raf = requestAnimationFrame(() => {
+      getLenis()?.resize();
+      ScrollTrigger.refresh();
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [pathname]);
 
   return null;
 }

@@ -217,3 +217,34 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------- Shared editorial primitives (inner pages) ---------- */
+/* Section kicker: serif-italic signal index + small caps label */
+.kicker {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.kicker-index {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--signal);
+}
+
+/* Outlined display type */
+.stroke {
+  color: transparent;
+  -webkit-text-stroke: var(--stroke-w, 1px) var(--stroke-color, var(--bone));
+}
+
+/* Inner-page content sits above the curtain footer */
+.page {
+  position: relative;
+  z-index: 2;
+  background: var(--ink);
+}

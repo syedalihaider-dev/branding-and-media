@@ -22,13 +22,6 @@ export const site = {
   },
 } as const;
 
-export const nav = [
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "Approach", href: "#approach" },
-  { label: "Contact", href: "#contact" },
-] as const;
-
 export type ServiceWorld =
   | "branding"
   | "strategy"

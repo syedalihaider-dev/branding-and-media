@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Mega menu — desktop only (≥1180px). Sits behind the header bar inside the
+   header's stacking context, so the bar reads on top of the ink panel.
+   ========================================================================== */
+
+.mega {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: -1;
+  padding-top: var(--header-h);
+  background: var(--ink);
+  color: var(--bone);
+  border-bottom: 1px solid var(--line-on-dark);
+  box-shadow: 0 2.5rem 4rem -1rem rgb(0 0 0 / 0.5);
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition:
+    clip-path 0.75s var(--ease-in-out),
+    visibility 0s linear 0.75s;
+}
+
+.mega[data-open="true"] {
+  clip-path: inset(0 0 0 0);
+  visibility: visible;
+  transition:
+    clip-path 0.75s var(--ease-in-out),
+    visibility 0s;
+}
+
+.inner {
+  display: grid;
+  border-top: 1px solid var(--line-on-dark);
+  margin-inline: var(--gutter);
+}
+
+/* All three chapters share one cell → the panel never jumps in height. */
+.pane {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding-block: clamp(2rem, 4vh, 3rem) clamp(2rem, 4.5vh, 3.25rem);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+.pane[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.3s ease 0.05s,
+    visibility 0s;
+}
+
+/* ---------- Intro ---------- */
+.intro {
+  grid-column: 1 / 5;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-right: 1rem;
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted-on-dark);
+}
+
+.kickerIndex {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--signal);
+}
+
+.rule {
+  width: 2.5rem;
+  height: 1px;
+  background: var(--line-on-dark);
+}
+
+.title {
+  display: grid;
+  font-size: clamp(2.25rem, 1rem + 2.3vw, 3.6rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  font-variation-settings: "wdth" 72;
+  text-transform: uppercase;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.1em;
+  padding-bottom: 0.04em;
+}
+
+.line > span {
+  display: block;
+}
+
+.line :global(.serif) {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-size: 1.12em;
+  line-height: 0.9;
+  color: var(--signal);
+}
+
+.desc {
+  max-width: 30ch;
+  font-size: var(--fs-body);
+  line-height: 1.45;
+  color: rgb(237 232 223 / 0.72);
+}
+
+.count {
+  margin-top: auto;
+  color: var(--muted-on-dark);
+}
+
+/* ---------- Service index ---------- */
+.list {
+  position: relative;
+  grid-column: 5 / 10;
+  align-self: start;
+  border-top: 1px solid var(--line-on-dark);
+}
+
+.indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 0;
+  background: var(--signal);
+  pointer-events: none;
+}
+
+.list li {
+  border-bottom: 1px solid var(--line-on-dark);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.95rem 0.25rem 0.95rem 1.25rem;
+}
+
+.num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--muted-on-dark);
+  transition: color 0.35s ease;
+}
+
+.body {
+  display: grid;
+  gap: 0.2rem;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.name {
+  font-size: clamp(1.1rem, 0.7rem + 0.75vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-variation-settings: "wdth" 92;
+}
+
+.blurb {
+  font-size: var(--fs-small);
+  color: var(--muted-on-dark);
+  transition: color 0.35s ease;
+}
+
+.arrow {
+  font-size: 1.15rem;
+  opacity: 0;
+  transform: translateX(-0.75rem);
+  transition:
+    opacity 0.35s ease,
+    transform 0.6s var(--ease-out);
+}
+
+.item[data-hover="true"] .num,
+.item[aria-current="page"] .num {
+  color: var(--signal);
+}
+
+.item[data-hover="true"] .body {
+  transform: translateX(0.4rem);
+}
+
+.item[data-hover="true"] .blurb {
+  color: rgb(237 232 223 / 0.85);
+}
+
+.item[data-hover="true"] .arrow {
+  opacity: 1;
+  transform: none;
+  color: var(--signal);
+}
+
+/* ---------- Preview ---------- */
+.preview {
+  grid-column: 10 / 13;
+  display: grid;
+  gap: 0.75rem;
+  align-self: start;
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: min(24rem, 52vh);
+  width: 100%;
+  overflow: clip;
+  background: var(--ink-2);
+}
+
+/* New still wipes up over the old one; the old one leaves after it's covered. */
+.shot {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.01s linear 0.85s;
+}
+
+.shot[data-on="true"] {
+  z-index: 2;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 0.85s var(--ease-out);
+}
+
+.shot img {
+  object-fit: cover;
+  transform: scale(1.14);
+  transition: transform 1.4s var(--ease-out);
+}
+
+.shot[data-on="true"] img {
+  transform: scale(1);
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-on-dark);
+}
+
+.captionIndex {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.captionText {
+  text-align: right;
+  color: var(--bone);
+}
+
+@media (max-width: 1179.98px) {
+  .mega {
+    display: none;
+  }
+}

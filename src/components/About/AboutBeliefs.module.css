@@ -1,0 +1,143 @@
+.beliefs {
+  position: relative;
+  z-index: 2;
+  padding: var(--section-pad) var(--gutter);
+  background: var(--ink);
+  color: var(--bone);
+  overflow: clip;
+}
+
+.beliefs :global(.label) {
+  color: var(--muted-on-dark);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(14rem, 1fr) 2fr;
+  gap: 1.5rem var(--gutter);
+  align-items: start;
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.title {
+  max-width: 18ch;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-variation-settings: "wdth" 85;
+}
+
+.title em {
+  font-weight: 400;
+  color: var(--signal);
+}
+
+/* ---------- Rows ---------- */
+.list {
+  border-top: 1px solid var(--line-on-dark);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) minmax(14rem, 22rem);
+  align-items: end;
+  gap: 1rem var(--gutter);
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+  border-bottom: 1px solid var(--line-on-dark);
+}
+
+.index {
+  align-self: start;
+  padding-top: 0.6rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--signal);
+}
+
+.statement {
+  display: grid;
+  font-size: clamp(2.4rem, 0.6rem + 6vw, 7.25rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.fill,
+.ghost {
+  grid-area: 1 / 1;
+}
+
+.fill {
+  position: relative;
+  z-index: 1;
+}
+
+.ghost {
+  --stroke-color: rgb(237 232 223 / 0.35);
+}
+
+.statement em {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-size: 1.1em;
+  line-height: 0.8;
+}
+
+.fill em {
+  color: var(--signal);
+}
+
+.body {
+  max-width: 34ch;
+  padding-bottom: 0.35rem;
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: rgb(237 232 223 / 0.72);
+}
+
+/* ---------- Cursor follower ---------- */
+.follower {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: clamp(12rem, 16vw, 18rem);
+  aspect-ratio: 4 / 5;
+  margin: calc(clamp(12rem, 16vw, 18rem) * -0.625) 0 0 calc(clamp(12rem, 16vw, 18rem) * -0.5);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.followerImg {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+}
+
+.followerImg img {
+  object-fit: cover;
+}
+
+@media (max-width: 1099.98px) {
+  .follower {
+    display: none;
+  }
+
+  .head {
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .body {
+    grid-column: 2;
+  }
+}

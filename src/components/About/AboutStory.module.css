@@ -1,0 +1,191 @@
+.story {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 3rem;
+  padding: var(--section-pad) var(--gutter);
+  background: var(--bone);
+  color: var(--ink);
+}
+
+.story :global(.label) {
+  color: var(--muted-on-light);
+}
+
+/* ---------- Aside ---------- */
+.aside {
+  grid-column: 1 / 5;
+  align-self: start;
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+  display: grid;
+  gap: 2rem;
+}
+
+.figure {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 24rem;
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: clip;
+  background: var(--paper);
+}
+
+.img {
+  position: absolute;
+  inset: -6% 0;
+}
+
+.img img {
+  object-fit: cover;
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-on-light);
+}
+
+.caption span:last-child {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+/* ---------- Main column ---------- */
+.main {
+  grid-column: 5 / 13;
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.heading {
+  display: grid;
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 75;
+  text-transform: uppercase;
+}
+
+.hLine {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.1em;
+  padding-bottom: 0.04em;
+}
+
+.hLine > span {
+  display: block;
+}
+
+.heading em {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-size: 1.14em;
+  color: var(--signal);
+}
+
+.body {
+  max-width: 30ch;
+  font-size: clamp(1.5rem, 0.9rem + 2vw, 2.85rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  font-variation-settings: "wdth" 88;
+}
+
+.word {
+  will-change: opacity;
+}
+
+/* ---------- Eras ---------- */
+.eras {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem var(--gutter);
+  margin-top: 1rem;
+}
+
+.era {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  padding-top: 1.25rem;
+}
+
+.eraRule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--ink);
+}
+
+.eraIndex {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--signal);
+}
+
+.eraWord {
+  font-size: clamp(1.75rem, 1rem + 2vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.eraCaption {
+  max-width: 28ch;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--muted-on-light);
+}
+
+@media (max-width: 1099.98px) {
+  .aside {
+    grid-column: 1 / -1;
+    position: static;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .main {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .aside {
+    grid-template-columns: 1fr;
+  }
+
+  .figure {
+    max-width: none;
+    width: 78%;
+    justify-self: end;
+  }
+
+  .eras {
+    grid-template-columns: 1fr;
+  }
+}

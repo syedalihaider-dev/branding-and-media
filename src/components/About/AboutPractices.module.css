@@ -1,0 +1,251 @@
+.practices {
+  position: relative;
+  z-index: 2;
+  padding: var(--section-pad) var(--gutter);
+  background: var(--bone);
+  color: var(--ink);
+}
+
+.practices :global(.label) {
+  color: var(--muted-on-light);
+}
+
+/* ---------- Head ---------- */
+.head {
+  display: grid;
+  grid-template-columns: minmax(14rem, 1fr) 2fr;
+  gap: 1.5rem var(--gutter);
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.title {
+  grid-column: 2;
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 72;
+  text-transform: uppercase;
+}
+
+.title em {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-size: 1.12em;
+  color: var(--signal);
+}
+
+.lede {
+  grid-column: 2;
+  max-width: 40ch;
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+}
+
+/* ---------- Body ---------- */
+.body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+.visual {
+  grid-column: 1 / 7;
+  position: sticky;
+  top: calc(var(--header-h) + 1rem);
+  height: calc(100svh - var(--header-h) - 3rem);
+  align-self: start;
+}
+
+.visualFrame {
+  position: relative;
+  height: 100%;
+  overflow: clip;
+  background: var(--paper);
+}
+
+.shot {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+}
+
+.shot img {
+  object-fit: cover;
+}
+
+/* Static fallback shows the first practice; motion takes over inline. */
+.shot:not(:first-child) {
+  clip-path: inset(100% 0 0 0);
+}
+
+.counter {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 0.75rem;
+  z-index: 3;
+  height: 1em;
+  overflow: clip;
+  font-size: clamp(4rem, 2rem + 6vw, 9rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 70;
+  color: var(--bone);
+  mix-blend-mode: difference;
+}
+
+.counterTrack {
+  display: grid;
+}
+
+.groups {
+  grid-column: 8 / 13;
+}
+
+.group {
+  min-height: 82svh;
+  display: grid;
+  align-content: center;
+  gap: 1.25rem;
+  padding-block: 3rem;
+  border-top: 1px solid var(--line-on-light);
+}
+
+.group:first-child {
+  border-top: 0;
+  align-content: start;
+  padding-top: 0;
+  min-height: 70svh;
+}
+
+.inlineFig {
+  display: none;
+}
+
+.groupMeta {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.groupTitle {
+  font-size: clamp(2.25rem, 1rem + 3.4vw, 4.75rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wdth" 72;
+  text-transform: uppercase;
+}
+
+.groupTitle em {
+  display: block;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-size: 1.1em;
+  color: var(--signal);
+}
+
+.groupDesc {
+  max-width: 36ch;
+  font-size: var(--fs-body);
+  line-height: 1.45;
+  color: var(--muted-on-light);
+}
+
+.services {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--line-on-light);
+}
+
+.services li {
+  border-bottom: 1px solid var(--line-on-light);
+}
+
+.service {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding-block: 0.9rem;
+  font-size: clamp(1.05rem, 0.9rem + 0.4vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.serviceNum {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--muted-on-light);
+  transition: color 0.3s ease;
+}
+
+.serviceName {
+  transition: transform 0.6s var(--ease-out);
+}
+
+.serviceArrow {
+  transform: translateX(-0.5rem);
+  opacity: 0;
+  transition:
+    transform 0.6s var(--ease-out),
+    opacity 0.3s ease;
+}
+
+.service:hover .serviceNum,
+.service:focus-visible .serviceNum {
+  color: var(--signal);
+}
+
+.service:hover .serviceName,
+.service:focus-visible .serviceName {
+  transform: translateX(0.4rem);
+}
+
+.service:hover .serviceArrow,
+.service:focus-visible .serviceArrow {
+  transform: none;
+  opacity: 1;
+  color: var(--signal);
+}
+
+@media (max-width: 1099.98px) {
+  .head {
+    grid-template-columns: 1fr;
+  }
+
+  .title,
+  .lede {
+    grid-column: 1;
+  }
+
+  .visual {
+    display: none;
+  }
+
+  .groups {
+    grid-column: 1 / -1;
+  }
+
+  .group,
+  .group:first-child {
+    min-height: 0;
+    padding-block: 2.5rem 3.5rem;
+    border-top: 1px solid var(--line-on-light);
+  }
+
+  .inlineFig {
+    display: block;
+    position: relative;
+    aspect-ratio: 16 / 11;
+    overflow: clip;
+    margin-bottom: 0.5rem;
+  }
+
+  .inlineFig img {
+    object-fit: cover;
+  }
+}

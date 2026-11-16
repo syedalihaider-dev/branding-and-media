@@ -1,0 +1,196 @@
+.direct {
+  position: relative;
+  z-index: 2;
+  padding: var(--section-pad) var(--gutter);
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.direct :global(.label) {
+  color: var(--muted-on-dark);
+}
+
+.head {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* ---------- The number ---------- */
+.phone {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.5rem 2rem;
+  padding-bottom: clamp(1rem, 2vw, 1.5rem);
+  border-bottom: 1px solid var(--line-on-dark);
+}
+
+.phoneLabel {
+  grid-column: 1 / -1;
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.phoneNumber {
+  font-size: clamp(3rem, 0.5rem + 11.5vw, 13.5rem);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 66;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.phoneMask {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.08em;
+}
+
+.phoneMask > span {
+  display: block;
+  /* Ink sweep on hover: a signal layer wipes through the glyphs */
+  background: linear-gradient(90deg, var(--signal) 50%, var(--bone) 50%) 100% 0 / 200% 100% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position 0.9s var(--ease-out);
+}
+
+.phone:hover .phoneMask > span,
+.phone:focus-visible .phoneMask > span {
+  background-position: 0 0;
+}
+
+.phoneArrow {
+  font-size: clamp(2rem, 1rem + 3vw, 4.5rem);
+  line-height: 1;
+  transition:
+    transform 0.6s var(--ease-out),
+    color 0.3s ease;
+}
+
+.phone:hover .phoneArrow {
+  transform: translate(0.3rem, -0.3rem) rotate(45deg);
+  color: var(--signal);
+}
+
+/* ---------- Details ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1fr) 2fr;
+  gap: 3rem var(--gutter);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.hq {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.address {
+  font-style: normal;
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+}
+
+.mapLink {
+  justify-self: start;
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--line-on-dark);
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.mapLink:hover {
+  color: var(--signal);
+  border-color: var(--signal);
+}
+
+.studios {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--gutter);
+  align-content: start;
+}
+
+.studiosHead {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.9rem;
+}
+
+.region {
+  display: grid;
+  align-content: start;
+}
+
+.regionName {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--signal);
+  padding: 0.85rem 0 0.6rem;
+  border-top: 1px solid var(--bone);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.6rem;
+  border-top: 1px solid var(--line-on-dark);
+  transition: color 0.3s ease;
+}
+
+.city {
+  font-size: clamp(1rem, 0.9rem + 0.3vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.time {
+  font-size: var(--fs-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-on-dark);
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.row:hover .time {
+  color: var(--signal);
+}
+
+@media (max-width: 1099.98px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .phoneNumber {
+    font-size: 15vw;
+  }
+
+  .phoneArrow {
+    display: none;
+  }
+
+  .studios {
+    grid-template-columns: 1fr;
+  }
+
+  .studiosHead span:last-child {
+    display: none;
+  }
+}
