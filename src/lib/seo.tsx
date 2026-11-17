@@ -60,3 +60,38 @@ export function JsonLd({ data }: { data: object }) {
     />
   );
 }
+
+/** schema.org Service for a service page, provided by the organization. */
+export function serviceJsonLd({
+  name,
+  description,
+  path,
+  serviceType,
+  offers,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  serviceType: string;
+  /** Named components of the service (rendered as an OfferCatalog). */
+  offers: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name,
+    serviceType,
+    description,
+    url: `${site.url}${path}`,
+    areaServed: "Worldwide",
+    provider: { "@type": "Organization", name: site.name, url: site.url },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name,
+      itemListElement: offers.map((o) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: o },
+      })),
+    },
+  };
+}

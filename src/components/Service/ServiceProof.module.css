@@ -1,0 +1,170 @@
+.proof {
+  position: relative;
+  z-index: 2;
+  padding: var(--section-pad) var(--gutter);
+}
+
+.head {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: clamp(3rem, 8vw, 7rem);
+}
+
+.title {
+  max-width: 14ch;
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  font-size: 1.1em;
+  line-height: 0.8;
+}
+
+.cases {
+  display: grid;
+  gap: clamp(5rem, 12vw, 11rem);
+}
+
+/* ---------- Project spread ---------- */
+.spread {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem var(--gutter);
+  align-items: end;
+}
+
+.frame {
+  grid-column: 1 / span 7;
+  position: relative;
+  overflow: clip;
+  background: var(--tint, var(--ink-2));
+}
+
+.frameInner {
+  will-change: transform;
+}
+
+.frameInner img {
+  width: 100%;
+  height: auto;
+}
+
+.meta {
+  grid-column: 9 / -1;
+  display: grid;
+  gap: 1.1rem;
+  padding-bottom: 0.5rem;
+}
+
+.spread[data-flip="true"] .frame {
+  grid-column: 6 / -1;
+  grid-row: 1;
+}
+
+.spread[data-flip="true"] .meta {
+  grid-column: 1 / span 4;
+  grid-row: 1;
+}
+
+.dim {
+  opacity: 0.6;
+}
+
+.caseTitle {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wdth" 78;
+}
+
+.note {
+  max-width: 38ch;
+  line-height: 1.5;
+  opacity: 0.82;
+}
+
+.tags {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--t-muted);
+  white-space: pre-wrap;
+}
+
+/* ---------- Case file ---------- */
+.file {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem var(--gutter);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--t-fg);
+}
+
+.fileHead {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.client {
+  grid-column: 1 / span 7;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2.6rem, 1.2rem + 5vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+}
+
+.brief {
+  grid-column: 8 / -1;
+  align-self: end;
+  max-width: 44ch;
+  line-height: 1.55;
+  opacity: 0.84;
+}
+
+.outcome {
+  grid-column: 1 / span 10;
+  display: grid;
+  gap: 0.9rem;
+  margin-top: clamp(1rem, 3vw, 2.5rem);
+}
+
+.outcomeText {
+  font-size: clamp(1.6rem, 1rem + 2.2vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 85;
+  padding-bottom: 0.25em;
+  background: linear-gradient(var(--t-accent), var(--t-accent)) 0 100% / 100% 1px no-repeat;
+}
+
+.file .tags {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 899.98px) {
+  .frame,
+  .meta,
+  .spread[data-flip="true"] .frame,
+  .spread[data-flip="true"] .meta,
+  .client,
+  .brief,
+  .outcome {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .frame {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+}

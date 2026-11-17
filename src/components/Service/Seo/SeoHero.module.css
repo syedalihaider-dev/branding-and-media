@@ -1,0 +1,259 @@
+.hero {
+  position: relative;
+  z-index: 2;
+  overflow: clip;
+}
+
+.inner {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto auto 1fr auto;
+  gap: clamp(1.25rem, 3.5vh, 2.5rem) var(--gutter);
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) clamp(1.5rem, 4vh, 2.5rem);
+  isolation: isolate;
+}
+
+.top {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ---------- Search line ---------- */
+.search {
+  grid-column: 1 / span 8;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1.5px solid var(--ink);
+  font-size: clamp(1.1rem, 0.8rem + 1vw, 1.8rem);
+  letter-spacing: -0.02em;
+}
+
+.glass {
+  flex: none;
+  width: 1.1em;
+  height: 1.1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.query {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.caret {
+  flex: none;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 2px;
+  background: var(--signal);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.enter {
+  flex: none;
+}
+
+/* ---------- Headline ---------- */
+.title {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  align-self: center;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  font-size: clamp(4rem, 0.6rem + 14vw, 17rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin-bottom: 1.2rem;
+  font-size: var(--fs-small);
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+.row {
+  display: block;
+}
+
+.rowEnd {
+  padding-left: 18%;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  padding-bottom: 0.05em;
+}
+
+.line > span {
+  display: block;
+  white-space: nowrap;
+}
+
+.ch {
+  display: inline-block;
+  font-variation-settings: "wdth" 70;
+}
+
+.space {
+  display: inline-block;
+  width: 0.2em;
+}
+
+.title :global(.accent) {
+  font-size: 1.25em;
+  line-height: 0.76;
+  letter-spacing: -0.035em;
+}
+
+/* ---------- Lens ---------- */
+.lens {
+  position: absolute;
+  z-index: 1;
+  right: 12%;
+  top: 22%;
+  width: clamp(14rem, 28vw, 32rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: clip;
+  will-change: transform;
+}
+
+.lensInner {
+  position: absolute;
+  inset: 0;
+}
+
+.lensInner img {
+  object-fit: cover;
+}
+
+/* ---------- Ranking ruler ---------- */
+.ruler {
+  position: absolute;
+  z-index: 2;
+  right: var(--gutter);
+  top: calc(var(--header-h) + 7rem);
+  display: grid;
+  gap: 0.55rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ruler li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--muted-on-light);
+}
+
+.ruler li::before {
+  content: "";
+  width: 1.4rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.ruler li[data-on="true"] {
+  color: var(--signal);
+  font-weight: 600;
+}
+
+.ruler li[data-on="true"]::before {
+  width: 2.6rem;
+  opacity: 1;
+}
+
+.ruler em {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  letter-spacing: 0;
+}
+
+/* ---------- Foot ---------- */
+.foot {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1.5rem 3rem;
+  flex-wrap: wrap;
+}
+
+.lead {
+  max-width: 46ch;
+  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.35rem);
+  line-height: 1.35;
+}
+
+@media (max-width: 1099.98px) {
+  .search {
+    grid-column: 1 / -1;
+  }
+
+  .ruler {
+    display: none;
+  }
+
+  .lens {
+    right: -10%;
+    top: 34%;
+    width: 58vw;
+  }
+
+  .rowEnd {
+    padding-left: 6%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .title {
+    font-size: 21vw;
+  }
+
+  .lens {
+    top: 40%;
+    width: 72vw;
+    right: -18%;
+  }
+
+  .enter {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    animation: none;
+  }
+}

@@ -1,0 +1,213 @@
+/* Size is set by the parent via --w; everything else derives from it. */
+.book {
+  --w: 20rem;
+  --h: calc(var(--w) * 1.5);
+  --d: calc(var(--w) * 0.13);
+  --open: 0deg;
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  transform-style: preserve-3d;
+  container-type: inline-size;
+}
+
+.book > div {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+/* Back cover */
+.back {
+  inset: 0;
+  transform: translateZ(calc(var(--d) / -2)) rotateY(180deg);
+  background: var(--oxblood);
+  border-radius: 2px 6px 6px 2px;
+}
+
+/* Spine — left side */
+.spine {
+  top: 0;
+  left: 0;
+  width: var(--d);
+  height: var(--h);
+  transform-origin: 0 50%;
+  transform: translateZ(calc(var(--d) / -2)) rotateY(-90deg);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7cqw 0;
+  background: linear-gradient(90deg, #240a07, var(--oxblood) 40%, #240a07);
+  color: var(--blush);
+  writing-mode: vertical-rl;
+  font-size: 3.4cqw;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.spineTitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-size: 4.4cqw;
+}
+
+/* Fore-edge — page block, right side */
+.fore {
+  top: 1.5%;
+  right: 0;
+  width: var(--d);
+  height: 97%;
+  transform-origin: 100% 50%;
+  transform: translateZ(calc(var(--d) / -2)) rotateY(90deg);
+  background: repeating-linear-gradient(90deg, #efe8da 0 1px, #d9cfbd 1px 3px);
+}
+
+/* Top edge */
+.topEdge {
+  top: 0;
+  left: 0;
+  width: 98%;
+  height: var(--d);
+  transform-origin: 50% 0;
+  transform: translateZ(calc(var(--d) / -2)) rotateX(90deg);
+  background: repeating-linear-gradient(0deg, #efe8da 0 1px, #d9cfbd 1px 3px);
+}
+
+/* Title page (under the cover) */
+.titlePage {
+  inset: 1.5% 1.5% 1.5% 0;
+  transform: translateZ(calc(var(--d) / 2 - 1px));
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 5cqw;
+  padding: 14cqw 12cqw;
+  background:
+    linear-gradient(90deg, rgb(14 13 11 / 0.14), transparent 12%),
+    #f4efe5;
+  color: var(--ink);
+  text-align: center;
+}
+
+.tpChapter {
+  font-size: 3.6cqw;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+
+.tpRule {
+  width: 18cqw;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.tpLine {
+  font-family: var(--font-serif);
+  font-size: 9cqw;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.tpMark {
+  margin-top: 6cqw;
+  font-size: 3cqw;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* Front cover — hinged at the spine */
+.cover {
+  inset: 0;
+  transform-origin: 0 50%;
+  transform: translateZ(calc(var(--d) / 2)) rotateY(var(--open));
+  transform-style: preserve-3d;
+  backface-visibility: visible !important;
+}
+
+.coverFront,
+.coverInside {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 2px 6px 6px 2px;
+}
+
+.coverFront {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 9cqw 9cqw 8cqw 12cqw;
+  background:
+    linear-gradient(90deg, rgb(0 0 0 / 0.35), rgb(255 255 255 / 0.06) 3%, transparent 7%),
+    radial-gradient(120% 80% at 80% 10%, rgb(255 74 28 / 0.22), transparent 60%),
+    var(--oxblood);
+  color: var(--bone);
+  box-shadow: inset 0 0 0 1px rgb(243 201 184 / 0.18);
+}
+
+.coverFront::after {
+  content: "";
+  position: absolute;
+  inset: 5cqw 5cqw 5cqw 8cqw;
+  border: 1px solid rgb(243 201 184 / 0.35);
+  pointer-events: none;
+}
+
+.cAuthor {
+  font-size: 4cqw;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--blush);
+}
+
+.cTitle {
+  align-self: center;
+  display: grid;
+  font-size: 13cqw;
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.cTitle em {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.22em;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--signal);
+  font-variation-settings: normal;
+}
+
+.cFoot {
+  display: flex;
+  align-items: center;
+  gap: 2.5cqw;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 4.4cqw;
+  color: var(--blush);
+}
+
+.cFoot i {
+  width: 3cqw;
+  height: 3cqw;
+  border-radius: 50%;
+  background: var(--signal);
+}
+
+/* Inside of the cover: endpapers */
+.coverInside {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(circle at 25% 25%, rgb(243 201 184 / 0.18) 1.2cqw, transparent 1.4cqw) 0 0 / 9cqw 9cqw,
+    radial-gradient(circle at 75% 75%, rgb(243 201 184 / 0.12) 1.2cqw, transparent 1.4cqw) 0 0 / 9cqw 9cqw,
+    #4a1712;
+}

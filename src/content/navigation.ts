@@ -5,7 +5,7 @@
  * Service categories are *groupings only*: they have no landing page of
  * their own. Each service gets a flat, top-level URL so the category can
  * be renamed or regrouped later without breaking links.
- * (Service pages themselves are built separately.)
+ * Digital Growth & Marketing pages are live; the other groups follow.
  */
 
 export type Still = {
@@ -170,6 +170,8 @@ export const pageLinks = [
  * Service pages that exist. Until a page is built its links are not
  * prefetched (avoids background 404s); add the href here when it ships.
  */
-const builtServicePages = new Set<string>([]);
+const builtServicePages = new Set<string>(
+  serviceGroups.find((g) => g.id === "growth")!.services.map((s) => s.href),
+);
 
 export const prefetchFor = (href: string) => (builtServicePages.has(href) ? undefined : false);

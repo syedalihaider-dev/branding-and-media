@@ -1,0 +1,144 @@
+.funnel {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem var(--gutter);
+  align-items: center;
+  min-height: 100svh;
+  padding: calc(var(--header-h) + 2rem) var(--gutter) 2.5rem;
+}
+
+.head {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 1.75rem;
+}
+
+.title {
+  font-size: clamp(2.6rem, 1rem + 4vw, 5.8rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  display: block;
+  font-size: 1.1em;
+}
+
+.notes {
+  display: grid;
+}
+
+.note {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 0.25rem 0.75rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--t-line);
+}
+
+.noteIdx {
+  grid-row: span 2;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--signal);
+}
+
+.note h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.note p {
+  max-width: 40ch;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--t-muted);
+}
+
+/* ---------- Funnel ---------- */
+.shape {
+  grid-column: 6 / -1;
+  display: grid;
+  gap: 4px;
+}
+
+.band {
+  --lit: 0;
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0.3rem;
+  height: clamp(6rem, 17svh, 10rem);
+  background: color-mix(in srgb, var(--signal) calc(var(--lit) * 100%), var(--ink-3));
+  color: color-mix(in srgb, var(--ink) calc(var(--lit) * 100%), var(--bone));
+  text-align: center;
+  will-change: clip-path;
+}
+
+.bandStage {
+  font-size: clamp(1.9rem, 0.8rem + 3vw, 4.4rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.bandLine {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1rem, 0.8rem + 0.6vw, 1.5rem);
+}
+
+/* Static: funnel drawn, every stage lit */
+@media (prefers-reduced-motion: reduce) {
+  .band {
+    --lit: 1;
+  }
+
+  .band:nth-child(1) {
+    clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%);
+  }
+
+  .band:nth-child(2) {
+    clip-path: polygon(10% 0%, 90% 0%, 81% 100%, 19% 100%);
+  }
+
+  .band:nth-child(3) {
+    clip-path: polygon(19% 0%, 81% 0%, 73% 100%, 27% 100%);
+  }
+
+  .band:nth-child(4) {
+    clip-path: polygon(27% 0%, 73% 0%, 66% 100%, 34% 100%);
+  }
+}
+
+@media (max-width: 1099.98px) {
+  .pin {
+    min-height: 0;
+    padding-block: var(--section-pad);
+  }
+
+  .head,
+  .shape {
+    grid-column: 1 / -1;
+  }
+
+  .shape {
+    order: -1;
+  }
+
+  .band {
+    height: clamp(5rem, 14vw, 7rem);
+  }
+}

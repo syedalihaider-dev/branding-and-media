@@ -1,0 +1,118 @@
+.intro {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding: var(--section-pad) var(--gutter);
+}
+
+.statement {
+  max-width: 22ch;
+  font-size: clamp(2.1rem, 0.9rem + 4.6vw, 6.4rem);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+  font-variation-settings: "wdth" 82;
+  text-wrap: balance;
+}
+
+.statement :global(.accent) {
+  font-size: 1.1em;
+  line-height: 0.8;
+}
+
+.detail {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem var(--gutter);
+  padding-top: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.rule {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: var(--t-line);
+}
+
+.body {
+  grid-column: 5 / span 4;
+  max-width: 40ch;
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--t-fg);
+  opacity: 0.86;
+}
+
+.aside {
+  grid-column: 10 / -1;
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.aside ul {
+  display: grid;
+}
+
+.aside li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--t-line);
+  font-size: var(--fs-small);
+}
+
+.n {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--t-accent);
+}
+
+/* ---------- Manuscript (book page) ---------- */
+.intro[data-variant="manuscript"] .statement {
+  max-width: 30ch;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 1rem + 3.2vw, 4.6rem);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  font-variation-settings: normal;
+  margin-inline: auto;
+  text-align: left;
+}
+
+/* Raised initial: the first word's first letter */
+.intro[data-variant="manuscript"] .statement [data-w="0"]::first-letter {
+  font-size: 2.3em;
+  line-height: 0.7;
+  padding-right: 0.03em;
+  color: var(--t-accent);
+}
+
+.intro[data-variant="manuscript"] .statement :global(.accent) {
+  font-size: 1em;
+}
+
+.intro[data-variant="manuscript"] > :global(.kicker) {
+  justify-content: center;
+}
+
+@media (max-width: 1099.98px) {
+  .body {
+    grid-column: 1 / span 7;
+  }
+
+  .aside {
+    grid-column: 8 / -1;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .body,
+  .aside {
+    grid-column: 1 / -1;
+  }
+}

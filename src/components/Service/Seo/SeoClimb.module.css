@@ -1,0 +1,203 @@
+.climb {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem var(--gutter);
+  align-items: center;
+  min-height: 100svh;
+  padding: calc(var(--header-h) + 2rem) var(--gutter) 2.5rem;
+}
+
+.side {
+  grid-column: 1 / span 5;
+  display: grid;
+  gap: 2rem;
+}
+
+.title {
+  font-size: clamp(2.6rem, 1rem + 4.4vw, 6.4rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  display: block;
+  font-size: 1.1em;
+}
+
+.pillars {
+  display: grid;
+}
+
+.pillar {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 0.3rem 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--t-line);
+}
+
+.pIndex {
+  grid-row: span 2;
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--t-accent);
+}
+
+.pTitle {
+  font-size: clamp(1.3rem, 1rem + 1vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 80;
+}
+
+.pBody {
+  max-width: 40ch;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--t-muted);
+}
+
+/* ---------- Board ---------- */
+.board {
+  --row-h: clamp(3.6rem, 7.6svh, 5rem);
+  grid-column: 7 / -1;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.boardHead {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--t-fg);
+}
+
+.position {
+  font-size: clamp(3rem, 1.5rem + 4vw, 6rem);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 66;
+  font-variant-numeric: tabular-nums;
+}
+
+.hash {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--signal);
+  margin-right: 0.05em;
+}
+
+.illus {
+  margin-left: auto;
+}
+
+.results {
+  position: relative;
+  height: calc(var(--row-h) * 8);
+}
+
+.result {
+  --slot: 0;
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--row-h);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-inline: 1rem;
+  border-bottom: 1px solid var(--t-line);
+  transform: translateY(calc(var(--slot) * 100%));
+  will-change: transform;
+}
+
+.rank {
+  flex: none;
+  width: 2.6rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+.bars {
+  flex: 1;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.bars i {
+  display: block;
+  height: 0.5rem;
+  background: rgb(14 13 11 / 0.14);
+}
+
+.bars i:last-child {
+  height: 0.3rem;
+  background: rgb(14 13 11 / 0.08);
+}
+
+.you {
+  --glow: 0;
+  z-index: 2;
+  background: var(--ink);
+  color: var(--bone);
+  border-bottom: 0;
+  box-shadow: 0 0 0 calc(var(--glow) * 6px) var(--signal);
+}
+
+.you .rank {
+  color: var(--signal);
+}
+
+.youText {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.youText b {
+  font-size: clamp(1rem, 0.85rem + 0.5vw, 1.3rem);
+  letter-spacing: -0.02em;
+}
+
+.youText span {
+  font-size: var(--fs-small);
+  color: var(--muted-on-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Without motion the climb is already complete. */
+@media (prefers-reduced-motion: reduce) {
+  .you {
+    --slot: 0 !important;
+  }
+
+  .result:not(.you) {
+    transform: translateY(calc((var(--slot) + 1) * 100%));
+  }
+}
+
+@media (max-width: 1099.98px) {
+  .pin {
+    min-height: 0;
+    padding-block: var(--section-pad);
+  }
+
+  .side,
+  .board {
+    grid-column: 1 / -1;
+  }
+}

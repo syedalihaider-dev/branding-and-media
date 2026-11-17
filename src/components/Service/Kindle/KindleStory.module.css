@@ -1,0 +1,235 @@
+.story {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  --pw: min(31vw, 54svh * 0.75);
+  --ph: calc(var(--pw) * 4 / 3);
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: center;
+  gap: clamp(1.5rem, 4vh, 3rem);
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) 2.5rem;
+  overflow: clip;
+}
+
+.head {
+  justify-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 1rem + 3.6vw, 5.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.title :global(.accent) {
+  color: var(--blush);
+}
+
+/* ---------- Spread ---------- */
+.spread {
+  position: relative;
+  align-self: center;
+  width: calc(var(--pw) * 2);
+  height: var(--ph);
+  perspective: 2600px;
+  transform-style: preserve-3d;
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  width: var(--pw);
+  height: var(--ph);
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 1.2rem;
+  padding: calc(var(--pw) * 0.11) calc(var(--pw) * 0.1);
+  background: #f4efe5;
+  color: var(--ink);
+}
+
+.left {
+  left: 0;
+  background: linear-gradient(270deg, rgb(14 13 11 / 0.16), transparent 14%), #f4efe5;
+  box-shadow: -1.5rem 2rem 4rem -1rem rgb(0 0 0 / 0.45);
+  /* Below every leaf, turned or not */
+  transform: translateZ(-12px);
+}
+
+.rightBase {
+  left: var(--pw);
+  background: #efe8da;
+  box-shadow: 1.5rem 2rem 4rem -1rem rgb(0 0 0 / 0.45);
+  transform: translateZ(-12px);
+}
+
+.leaves {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.leaf {
+  --turn: 0deg;
+  --lift: 0;
+  position: absolute;
+  top: 0;
+  left: var(--pw);
+  width: var(--pw);
+  height: var(--ph);
+  transform-origin: 0 50%;
+  transform-style: preserve-3d;
+  /* translate first, then rotate: turned leaves stack in reverse order */
+  transform: rotateY(var(--turn)) translateZ(calc(var(--z) * 0.6px + var(--lift) * 30px));
+}
+
+.front,
+.back {
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.front {
+  background: linear-gradient(90deg, rgb(14 13 11 / 0.16), transparent 14%), #f4efe5;
+}
+
+.back {
+  transform: rotateY(180deg);
+  grid-template-rows: auto 1fr auto auto;
+  justify-items: center;
+  text-align: center;
+  background: linear-gradient(270deg, rgb(14 13 11 / 0.16), transparent 14%), #f4efe5;
+}
+
+.gutter {
+  position: absolute;
+  left: calc(var(--pw) - 1px);
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: rgb(14 13 11 / 0.25);
+  transform: translateZ(8px);
+  pointer-events: none;
+}
+
+.chapter {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+
+.prologue {
+  grid-row: 3;
+  align-self: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 0.8rem + 1vw, 1.9rem);
+  line-height: 1.2;
+}
+
+.leafTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 1rem + 2.6vw, 3.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.leafBody {
+  align-self: end;
+  font-size: clamp(0.95rem, 0.85rem + 0.3vw, 1.1rem);
+  line-height: 1.55;
+}
+
+.leafBody::first-letter {
+  font-family: var(--font-serif);
+  font-size: 2.6em;
+  float: left;
+  line-height: 0.85;
+  padding: 0.05em 0.08em 0 0;
+  color: var(--oxblood);
+}
+
+.numeral {
+  grid-row: 2;
+  align-self: center;
+  font-family: var(--font-serif);
+  font-size: calc(var(--pw) * 0.5);
+  line-height: 0.8;
+  color: var(--oxblood);
+}
+
+.backLine {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.3rem;
+}
+
+.folio {
+  grid-row: -2;
+  justify-self: center;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0.6;
+}
+
+/* ---------- Narrow / reduced motion: a stack of pages ---------- */
+@media (max-width: 1099.98px), (prefers-reduced-motion: reduce) {
+  .pin {
+    min-height: 0;
+    padding-block: var(--section-pad);
+  }
+
+  .spread {
+    width: 100%;
+    max-width: 34rem;
+    height: auto;
+    display: grid;
+    gap: 1.25rem;
+    perspective: none;
+  }
+
+  .page,
+  .leaf,
+  .leaves {
+    position: relative;
+    left: auto;
+    inset: auto;
+    width: auto;
+    height: auto;
+    transform: none;
+  }
+
+  .page {
+    min-height: 0;
+    gap: 1rem;
+    padding: 2rem 1.75rem;
+    box-shadow: 0 1.25rem 2.5rem -1.25rem rgb(0 0 0 / 0.5);
+  }
+
+  .leaves {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .rightBase,
+  .back,
+  .gutter {
+    display: none;
+  }
+
+  .leafBody {
+    align-self: start;
+  }
+}

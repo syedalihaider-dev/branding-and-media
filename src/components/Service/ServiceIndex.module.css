@@ -1,0 +1,256 @@
+.index {
+  position: relative;
+  z-index: 2;
+  padding: var(--section-pad) var(--gutter);
+}
+
+/* ---------- Head ---------- */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem var(--gutter);
+  align-items: end;
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.head > :global(.kicker) {
+  grid-column: 1 / -1;
+}
+
+.title {
+  grid-column: 1 / span 8;
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 72;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  font-size: 1.12em;
+  line-height: 0.8;
+}
+
+.intro {
+  grid-column: 9 / span 3;
+  max-width: 34ch;
+  color: var(--t-muted);
+}
+
+.count {
+  grid-column: 12;
+  justify-self: end;
+}
+
+/* ---------- Rows ---------- */
+.list {
+  border-bottom: 1px solid var(--t-line);
+}
+
+.row {
+  --row-fg: var(--t-fg);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1rem var(--gutter);
+  align-items: baseline;
+  padding: clamp(1.5rem, 2.6vw, 2.4rem) 0;
+  color: var(--row-fg);
+  isolation: isolate;
+}
+
+.rowRule {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: var(--t-line);
+  transform-origin: 0 50%;
+}
+
+/* Flood on hover (fine pointers only) */
+.row::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(var(--gutter) * -1);
+  z-index: -1;
+  background: var(--t-fg);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 0.7s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .row:hover {
+    --row-fg: var(--t-bg);
+  }
+
+  .row:hover::before {
+    transform: scaleY(1);
+  }
+
+  .row:hover .name > span:first-child {
+    transform: translateX(0.35em);
+  }
+}
+
+.num {
+  grid-column: 1;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--t-accent);
+  transition: color 0.5s ease;
+}
+
+.row:hover .num {
+  color: var(--row-fg);
+}
+
+.name {
+  grid-column: 2 / span 6;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: clamp(1.75rem, 1rem + 2.4vw, 3.6rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variation-settings: "wdth" 78;
+  transition: color 0.5s ease;
+}
+
+.name > span:first-child {
+  transition: transform 0.7s var(--ease-out);
+}
+
+.copy {
+  grid-column: 9 / -1;
+  display: grid;
+  gap: 0.9rem;
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  transition: color 0.5s ease;
+}
+
+.copy p {
+  max-width: 44ch;
+  opacity: 0.8;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.66;
+}
+
+.tags li::before {
+  content: "/ ";
+  opacity: 0.5;
+}
+
+/* ---------- Contents (book) ---------- */
+.index[data-variant="contents"] .title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  font-variation-settings: normal;
+}
+
+.index[data-variant="contents"] .title :global(.accent) {
+  font-size: 1em;
+}
+
+.index[data-variant="contents"] .row {
+  align-items: start;
+}
+
+.index[data-variant="contents"] .num {
+  font-size: clamp(1.4rem, 1rem + 1vw, 2rem);
+  line-height: 1;
+}
+
+.index[data-variant="contents"] .name {
+  grid-column: 2 / -1;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-variation-settings: normal;
+  line-height: 1;
+}
+
+.leader {
+  flex: 1;
+  min-width: 2rem;
+  align-self: center;
+  height: 0;
+  border-bottom: 2px dotted currentColor;
+  opacity: 0.35;
+}
+
+.index[data-variant="contents"] .copy {
+  grid-column: 2 / span 7;
+  font-size: var(--fs-body);
+}
+
+@media (max-width: 1099.98px) {
+  .title {
+    grid-column: 1 / -1;
+  }
+
+  .intro {
+    grid-column: 1 / span 8;
+  }
+
+  .count {
+    grid-column: 9 / -1;
+  }
+
+  .name {
+    grid-column: 2 / -1;
+  }
+
+  .copy,
+  .index[data-variant="contents"] .copy {
+    grid-column: 2 / -1;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .head {
+    grid-template-columns: 1fr;
+  }
+
+  .title,
+  .intro,
+  .count {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .row {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    column-gap: 0.75rem;
+  }
+
+  .num {
+    grid-column: 1;
+  }
+
+  .name,
+  .copy,
+  .index[data-variant="contents"] .name,
+  .index[data-variant="contents"] .copy {
+    grid-column: 2;
+  }
+
+  .leader {
+    display: none;
+  }
+}

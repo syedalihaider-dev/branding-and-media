@@ -1,0 +1,173 @@
+.ledger {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0 var(--gutter);
+  padding: var(--section-pad) var(--gutter);
+}
+
+.side {
+  grid-column: 1 / span 5;
+}
+
+.sticky {
+  position: sticky;
+  top: calc(var(--header-h) + 2rem);
+  display: grid;
+  gap: 2rem;
+}
+
+.title {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  font-size: 1.1em;
+  line-height: 0.8;
+}
+
+.odometer {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-top: clamp(1rem, 4vh, 3rem);
+}
+
+.window {
+  display: block;
+  height: 0.8em;
+  overflow: clip;
+  font-size: clamp(7rem, 3rem + 11vw, 15rem);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  font-variation-settings: "wdth" 62;
+  color: var(--t-accent);
+}
+
+.reel {
+  display: grid;
+  will-change: transform;
+}
+
+.reel > span {
+  display: block;
+  height: 0.8em;
+}
+
+.of {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.6rem;
+  color: var(--t-muted);
+  padding-bottom: 0.4rem;
+}
+
+/* ---------- List ---------- */
+.items {
+  display: grid;
+}
+
+.list {
+  grid-column: 7 / -1;
+  position: relative;
+  padding-left: clamp(1.5rem, 3vw, 3rem);
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+}
+
+.spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--t-line);
+}
+
+.spine i {
+  display: block;
+  height: 100%;
+  background: var(--t-accent);
+  transform-origin: top;
+}
+
+.item {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+  min-height: 46vh;
+  padding-block: 2rem;
+}
+
+.dot {
+  position: absolute;
+  left: calc(clamp(1.5rem, 3vw, 3rem) * -1 - 4px);
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--t-bg);
+  border: 1px solid var(--t-fg);
+}
+
+.mobileNum {
+  display: none;
+}
+
+.itemTitle {
+  font-size: clamp(2.6rem, 1rem + 5vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 76;
+  text-transform: uppercase;
+}
+
+.itemBody {
+  max-width: 38ch;
+  font-size: var(--fs-lead);
+  line-height: 1.25;
+  opacity: 0.82;
+}
+
+@media (max-width: 1099.98px) {
+  .side,
+  .list {
+    grid-column: 1 / -1;
+  }
+
+  .sticky {
+    position: static;
+  }
+
+  .odometer {
+    display: none;
+  }
+
+  .list {
+    margin-top: 3rem;
+    padding-block: 0;
+  }
+
+  .item {
+    min-height: 0;
+    padding-block: 2rem;
+  }
+
+  .dot {
+    top: 2.7rem;
+  }
+
+  .mobileNum {
+    display: block;
+    color: var(--t-accent);
+  }
+}

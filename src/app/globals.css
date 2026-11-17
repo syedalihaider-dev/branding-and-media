@@ -248,3 +248,86 @@ html.lenis body {
   z-index: 2;
   background: var(--ink);
 }
+
+/* ---------- Service-page tones ---------- */
+/* One attribute sets a section's ground, ink, rules and accent.
+   Sections pair it with the matching data-theme for the header. */
+[data-svc-tone] {
+  background: var(--t-bg);
+  color: var(--t-fg);
+}
+
+[data-svc-tone="ink"] {
+  --t-bg: var(--ink);
+  --t-fg: var(--bone);
+  --t-muted: var(--muted-on-dark);
+  --t-line: var(--line-on-dark);
+  --t-accent: var(--signal);
+}
+
+[data-svc-tone="ink-2"] {
+  --t-bg: var(--ink-2);
+  --t-fg: var(--bone);
+  --t-muted: var(--muted-on-dark);
+  --t-line: var(--line-on-dark);
+  --t-accent: var(--signal);
+}
+
+[data-svc-tone="bone"] {
+  --t-bg: var(--bone);
+  --t-fg: var(--ink);
+  --t-muted: var(--muted-on-light);
+  --t-line: var(--line-on-light);
+  --t-accent: var(--signal);
+}
+
+[data-svc-tone="paper"] {
+  --t-bg: var(--paper);
+  --t-fg: var(--ink);
+  --t-muted: var(--muted-on-light);
+  --t-line: var(--line-on-light);
+  --t-accent: var(--oxblood);
+}
+
+[data-svc-tone="blush"] {
+  --t-bg: var(--blush);
+  --t-fg: var(--ink);
+  --t-muted: rgb(14 13 11 / 0.66);
+  --t-line: rgb(14 13 11 / 0.18);
+  --t-accent: var(--oxblood);
+}
+
+[data-svc-tone="signal"] {
+  --t-bg: var(--signal);
+  --t-fg: var(--ink);
+  --t-muted: rgb(14 13 11 / 0.7);
+  --t-line: rgb(14 13 11 / 0.25);
+  --t-accent: var(--bone);
+}
+
+[data-svc-tone="oxblood"] {
+  --t-bg: var(--oxblood);
+  --t-fg: var(--bone);
+  --t-muted: rgb(237 232 223 / 0.66);
+  --t-line: rgb(237 232 223 / 0.18);
+  --t-accent: var(--blush);
+}
+
+[data-svc-tone] .kicker-index {
+  color: var(--t-accent);
+}
+
+[data-svc-tone] .label {
+  color: var(--t-muted);
+}
+
+/* Shared accent for italic serif words inside display type */
+.accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-variation-settings: normal;
+  color: var(--t-accent, var(--signal));
+}

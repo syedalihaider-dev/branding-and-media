@@ -1,0 +1,221 @@
+.loop {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem var(--gutter);
+  align-items: center;
+  min-height: 100svh;
+  padding: calc(var(--header-h) + 2rem) var(--gutter) 2.5rem;
+  overflow: clip;
+}
+
+.head {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: clamp(2.6rem, 1rem + 4.2vw, 6rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  display: block;
+  font-size: 1.1em;
+  color: var(--blush);
+}
+
+.intro {
+  max-width: 30ch;
+  line-height: 1.5;
+  color: var(--t-muted);
+}
+
+/* ---------- Dial ---------- */
+.dial {
+  --size: min(76svh, 44vw);
+  --spin: 0deg;
+  grid-column: 6 / -1;
+  position: relative;
+  justify-self: center;
+  width: var(--size);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(calc(var(--spin) * -1));
+  will-change: transform;
+}
+
+.ring svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  rotate: -90deg;
+}
+
+.track {
+  fill: none;
+  stroke: var(--line-on-dark);
+  stroke-width: 0.25;
+}
+
+.arc {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 0.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  /* Place on the circle (r = 46% of the dial) */
+  transform: rotate(var(--a)) translateY(calc(var(--size) * -0.46));
+}
+
+.node::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 1.5px solid var(--bone);
+}
+
+.nodeLabel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  /* Keep labels upright at their angle, offset outside the ring */
+  transform: translate(-50%, -2.6rem) rotate(calc(var(--a) * -1 + var(--spin)));
+  font-size: clamp(1rem, 0.7rem + 0.8vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.nodeLabel small {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--signal);
+}
+
+.centre {
+  position: relative;
+  width: 58%;
+  display: grid;
+  text-align: center;
+}
+
+.step {
+  grid-area: 1 / 1;
+  display: grid;
+  gap: 0.8rem;
+  justify-items: center;
+  align-content: center;
+}
+
+.stepNum {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--signal);
+}
+
+.stepTitle {
+  font-size: clamp(2.4rem, 1rem + 3.6vw, 5rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.stepBody {
+  max-width: 28ch;
+  line-height: 1.45;
+  color: var(--t-muted);
+}
+
+/* ---------- Narrow / static: dial becomes an ordered list ---------- */
+@media (max-width: 1099.98px), (prefers-reduced-motion: reduce) {
+  .pin {
+    min-height: 0;
+    padding-block: var(--section-pad);
+  }
+
+  .head,
+  .dial {
+    grid-column: 1 / -1;
+  }
+
+  .dial {
+    --size: auto;
+    width: 100%;
+    aspect-ratio: auto;
+    justify-self: stretch;
+  }
+
+  .ring {
+    display: none;
+  }
+
+  .centre {
+    width: 100%;
+    text-align: left;
+    gap: 0;
+  }
+
+  .step {
+    grid-area: auto;
+    grid-template-columns: 3rem 1fr;
+    justify-items: start;
+    gap: 0.4rem 1rem;
+    padding: 1.6rem 0;
+    border-top: 1px solid var(--t-line);
+  }
+
+  .stepNum {
+    grid-row: span 2;
+  }
+
+  .stepTitle {
+    font-size: clamp(2rem, 8vw, 3.4rem);
+  }
+
+  /* Closing the loop */
+  .centre::after {
+    content: "↻ and again";
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--t-line);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--signal);
+  }
+}

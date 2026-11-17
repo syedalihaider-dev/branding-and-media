@@ -1,0 +1,253 @@
+.hero {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  overflow: clip;
+  isolation: isolate;
+  cursor: crosshair;
+}
+
+/* ---------- Media: signal duotone ---------- */
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  will-change: transform;
+}
+
+.img {
+  object-fit: cover;
+  object-position: 50% 40%;
+  filter: grayscale(1) contrast(1.15) brightness(1.35);
+}
+
+.tone {
+  position: absolute;
+  inset: 0;
+  background: var(--signal);
+  mix-blend-mode: multiply;
+  opacity: 0.78;
+}
+
+.tone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgb(14 13 11 / 0.85), transparent 40%),
+    linear-gradient(90deg, rgb(14 13 11 / 0.45), transparent 55%);
+  mix-blend-mode: normal;
+}
+
+/* Speed streaks */
+.streaks {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.streaks i {
+  position: absolute;
+  left: 0;
+  top: calc(12% + var(--i) * 12%);
+  width: 38%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(237 232 223 / 0.55), transparent);
+  transform: translateX(-120%);
+  animation: streak calc(2.6s + var(--i) * 0.37s) linear infinite;
+  animation-delay: calc(var(--i) * -0.9s);
+}
+
+@keyframes streak {
+  to {
+    transform: translateX(320%);
+  }
+}
+
+/* ---------- Reticle ---------- */
+.reticle {
+  position: absolute;
+  z-index: 1;
+  left: 68%;
+  top: 30%;
+  width: clamp(6rem, 9vw, 9rem);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+.reticle svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: spin 14s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.reticle circle,
+.reticle path {
+  fill: none;
+  stroke: var(--bone);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.reticle .dot {
+  fill: var(--bone);
+}
+
+.coords {
+  position: absolute;
+  left: calc(100% + 0.6rem);
+  top: 50%;
+  display: grid;
+  gap: 0.15rem;
+  translate: 0 -50%;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.coords b {
+  font-weight: 600;
+}
+
+/* ---------- Content ---------- */
+.inner {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) clamp(1.5rem, 4vh, 2.5rem);
+  pointer-events: none;
+}
+
+.inner a,
+.inner button {
+  pointer-events: auto;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.top :global(.label) {
+  color: var(--bone) !important;
+}
+
+.title {
+  align-self: end;
+  display: grid;
+  font-size: clamp(3.8rem, 0.4rem + 12.4vw, 15rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  font-variation-settings: "wdth" 66;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin-bottom: 1.2rem;
+  font-size: var(--fs-small);
+  letter-spacing: 0.14em;
+  color: var(--bone) !important;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.14em;
+  padding-bottom: 0.05em;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.line > span {
+  display: block;
+}
+
+.lineEnd {
+  text-align: right;
+}
+
+.title :global(.accent) {
+  font-size: 1.22em;
+  line-height: 0.76;
+  letter-spacing: -0.035em;
+  color: var(--bone);
+}
+
+.foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) auto;
+  align-items: end;
+  gap: 1.5rem 3rem;
+}
+
+.lead {
+  max-width: 44ch;
+  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.35rem);
+  line-height: 1.35;
+}
+
+.facts {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.facts dt {
+  color: var(--bone) !important;
+  opacity: 0.7;
+  margin-bottom: 0.3rem;
+}
+
+.facts dd {
+  font-size: var(--fs-small);
+}
+
+@media (max-width: 767.98px) {
+  .hero {
+    cursor: auto;
+  }
+
+  .title {
+    font-size: 16.5vw;
+  }
+
+  .foot {
+    grid-template-columns: 1fr;
+  }
+
+  .facts {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .coords {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .streaks,
+  .reticle svg {
+    animation: none;
+  }
+
+  .streaks {
+    display: none;
+  }
+}

@@ -1,0 +1,191 @@
+/* The section's own ground is ink; the tone colour arrives as the field. */
+.close {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  display: grid;
+  overflow: clip;
+  isolation: isolate;
+  background: var(--ink) !important;
+}
+
+.field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--t-bg);
+}
+
+/* Shutter: the field is made of blinds, so it starts transparent */
+.close[data-reveal="shutter"] .field {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  background: transparent;
+}
+
+.blind {
+  display: block;
+  background: var(--t-bg);
+  will-change: transform;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.media img,
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Media sits under a wash of the tone so type stays legible */
+.media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--t-bg);
+  opacity: 0.72;
+}
+
+.close[data-reveal="card"] .media::after {
+  background: linear-gradient(to top, var(--ink) 5%, rgb(14 13 11 / 0.35) 60%, rgb(14 13 11 / 0.6));
+  opacity: 1;
+}
+
+.content {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 2rem) var(--gutter) clamp(2rem, 5vh, 3.5rem);
+  color: var(--t-fg);
+}
+
+.title {
+  align-self: center;
+  display: grid;
+  font-size: clamp(3.4rem, 0.6rem + 11.5vw, 13.5rem);
+  font-weight: 800;
+  line-height: 0.84;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 72;
+  text-transform: uppercase;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.14em;
+  padding-bottom: 0.06em;
+}
+
+.line > span {
+  display: block;
+}
+
+.line:last-child {
+  text-align: right;
+}
+
+.title :global(.accent) {
+  font-size: 1.16em;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+}
+
+.close[data-reveal="page"] .title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  font-variation-settings: normal;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2rem 4rem;
+}
+
+.sub {
+  max-width: 36ch;
+  font-size: var(--fs-lead);
+  line-height: 1.2;
+}
+
+.actions {
+  display: grid;
+  justify-items: end;
+  gap: 1rem;
+}
+
+.go {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 1.35rem 1.6rem;
+  background: var(--t-fg);
+  color: var(--t-bg);
+  transition:
+    background 0.4s ease,
+    color 0.4s ease;
+}
+
+.close[data-reveal="card"] .go {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+.goLabel {
+  font-size: clamp(1.15rem, 0.9rem + 0.8vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.goArrow {
+  font-size: 1.6rem;
+  line-height: 1;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.go:hover {
+  background: var(--t-accent);
+  color: var(--ink);
+}
+
+.go:hover .goArrow {
+  transform: translateX(0.5rem);
+}
+
+.call {
+  font-size: var(--fs-small);
+  opacity: 0.8;
+}
+
+.call span {
+  font-weight: 600;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+}
+
+@media (max-width: 767.98px) {
+  .title {
+    font-size: 14.5vw;
+  }
+
+  .bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    justify-items: stretch;
+  }
+
+  .go {
+    justify-content: space-between;
+  }
+}

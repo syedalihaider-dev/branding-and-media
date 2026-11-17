@@ -1,0 +1,56 @@
+.channels {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: clamp(0.5rem, 1.5vw, 1.25rem);
+  padding: clamp(4rem, 9vw, 8rem) 0;
+  overflow: clip;
+}
+
+.kicker {
+  padding-inline: var(--gutter);
+  margin-bottom: clamp(1rem, 3vw, 2.5rem);
+}
+
+.band {
+  overflow: clip;
+  white-space: nowrap;
+}
+
+.track {
+  display: inline-flex;
+  will-change: transform;
+}
+
+.set {
+  display: inline-flex;
+}
+
+.word {
+  display: inline-flex;
+  align-items: center;
+  font-size: clamp(3.6rem, 1rem + 10vw, 12rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 66;
+  text-transform: uppercase;
+}
+
+.word :global(.stroke) {
+  --stroke-color: var(--ink);
+  --stroke-w: 2px;
+}
+
+.sep {
+  margin-inline: 0.25em;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 0.7em;
+  color: var(--bone);
+}
+
+.band[data-pc-band="1"] .word {
+  font-size: clamp(2.6rem, 0.8rem + 7vw, 8.5rem);
+}

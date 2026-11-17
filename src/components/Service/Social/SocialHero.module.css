@@ -1,0 +1,175 @@
+.hero {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  overflow: clip;
+  isolation: isolate;
+}
+
+/* ---------- Content wall ---------- */
+.wall {
+  position: absolute;
+  inset: -12% -6%;
+  z-index: -2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  rotate: -7deg;
+  will-change: transform;
+}
+
+.col {
+  overflow: hidden;
+  height: 100%;
+}
+
+.col:nth-child(2),
+.col:nth-child(4) {
+  margin-top: -18%;
+}
+
+/* Trailing pad = gap, so half the height is exactly one copy (seamless loop). */
+.loop {
+  display: grid;
+  gap: 0.9rem;
+  padding-bottom: 0.9rem;
+  will-change: transform;
+}
+
+.card {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: clip;
+  border-radius: 0.6rem;
+  background: var(--ink-2);
+}
+
+.card img,
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.format {
+  position: absolute;
+  left: 0.8rem;
+  bottom: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 99px;
+  background: rgb(14 13 11 / 0.55);
+  backdrop-filter: blur(6px);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgb(14 13 11 / 0.92) 0%, rgb(14 13 11 / 0.55) 48%, rgb(14 13 11 / 0.15) 100%),
+    linear-gradient(to top, rgb(14 13 11 / 0.9), transparent 40%);
+}
+
+/* ---------- Content ---------- */
+.inner {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.title {
+  align-self: center;
+  display: grid;
+  font-size: clamp(4rem, 0.5rem + 13vw, 15.5rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  font-variation-settings: "wdth" 68;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin-bottom: 1.4rem;
+  font-size: var(--fs-small);
+  letter-spacing: 0.14em;
+  color: var(--bone) !important;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  padding-bottom: 0.05em;
+  white-space: nowrap;
+}
+
+.line > span {
+  display: inline-block;
+}
+
+.title :global(.accent) {
+  font-size: 1.24em;
+  line-height: 0.76;
+  letter-spacing: -0.03em;
+  color: var(--blush);
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1.5rem 3rem;
+  flex-wrap: wrap;
+}
+
+.lead {
+  max-width: 42ch;
+  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.35rem);
+  line-height: 1.35;
+}
+
+.for {
+  color: var(--bone) !important;
+}
+
+@media (max-width: 1099.98px) {
+  .wall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    inset: -10% -14%;
+  }
+
+  .col:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    inset: -8% -20%;
+  }
+
+  .col:nth-child(3) {
+    display: none;
+  }
+
+  .shade {
+    background: linear-gradient(to top, rgb(14 13 11 / 0.95) 10%, rgb(14 13 11 / 0.45) 60%, rgb(14 13 11 / 0.6));
+  }
+
+  .title {
+    font-size: 21vw;
+  }
+
+  .format {
+    font-size: 0.55rem;
+  }
+}
