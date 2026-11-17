@@ -9,6 +9,6 @@ export default function OpengraphImage() {
     kicker: "Contact",
     line: "Let's make your name",
     accent: "known.",
-    footnote: "Your first conversation is free. Call (917) 765-8780 or send an enquiry.",
+    footnote: "Your first conversation is free. Call (332) 203-2361 or send an enquiry.",
   });
 }

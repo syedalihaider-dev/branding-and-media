@@ -12,7 +12,7 @@ export const site = {
     "Turning people and businesses into impactful brands — powered by humans, ideas and data.",
   description:
     "Branding and Media is a global integrated marketing and communication agency turning people and businesses into impactful brands through branding, strategy, marketing, media, communications, content and technology.",
-  phone: { display: "(917) 765-8780", href: "tel:+19177658780" },
+  phone: { display: "(332) 203-2361", href: "tel:+13322032361" },
   address: {
     street: "539 W. Commerce St #1852",
     locality: "Dallas",

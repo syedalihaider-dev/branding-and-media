@@ -73,7 +73,7 @@ const organizationJsonLd = {
   url: site.url,
   logo: `${site.url}/brand/mark.png`,
   description: site.description,
-  telephone: "+1-917-765-8780",
+  telephone: "+1-332-203-2361",
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address.street,

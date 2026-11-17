@@ -1,3 +1,5 @@
+import { photos } from "./editorialImages";
+
 /**
  * Site navigation — single source of truth for the header, mega menu,
  * mobile menu and footer.
@@ -5,8 +7,7 @@
  * Service categories are *groupings only*: they have no landing page of
  * their own. Each service gets a flat, top-level URL so the category can
  * be renamed or regrouped later without breaking links.
- * Digital Growth & Marketing and Brand Development & Media Relations pages
- * are live; Editorial & Publishing follows.
+ * All three groups are live.
  */
 
 export type Still = {
@@ -125,25 +126,25 @@ export const serviceGroups: ServiceGroup[] = [
         label: "Media Copywriting",
         href: "/media-copywriting",
         blurb: "Copy for ads, press and every screen in between.",
-        still: still("peach"),
+        still: photos.copyTypebars,
       },
       {
         label: "Book Writing & Editing",
-        href: "/book-writing-and-editing",
+        href: "/book-writing-editing",
         blurb: "From first draft to finished manuscript.",
-        still: still("haze"),
+        still: photos.bookPages,
       },
       {
         label: "Blog & Article Writing",
-        href: "/blog-and-article-writing",
+        href: "/blog-article-writing",
         blurb: "Thought leadership, published consistently.",
-        still: still("portrait"),
+        still: photos.blogMagazine,
       },
       {
         label: "Ghostwriting",
         href: "/ghostwriting",
         blurb: "Your voice, your name — our pen.",
-        still: still("arena"),
+        still: photos.ghostNib,
       },
     ],
   },
@@ -171,7 +172,7 @@ export const pageLinks = [
  * Service pages that exist. Until a page is built its links are not
  * prefetched (avoids background 404s); add the href here when it ships.
  */
-export const liveGroups: ServiceGroup["id"][] = ["growth", "media"];
+export const liveGroups: ServiceGroup["id"][] = ["growth", "media", "editorial"];
 
 const builtServicePages = new Set<string>(
   serviceGroups.filter((g) => liveGroups.includes(g.id)).flatMap((g) => g.services.map((s) => s.href)),

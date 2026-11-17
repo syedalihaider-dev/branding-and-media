@@ -18,7 +18,10 @@ export type CloseReveal =
   | "letterbox"
   | "columns"
   | "mirror"
-  | "spot";
+  | "spot"
+  | "highlight"
+  | "feed"
+  | "ink";
 
 type Media = { kind: "image"; src: string } | { kind: "video" };
 
@@ -30,7 +33,9 @@ const BLINDS: Partial<Record<CloseReveal, number>> = { shutter: 12, columns: 6 }
  *  shutter (a grid assembling), iris (a lens opening), card (a post
  *  expanding to full screen), slash (a fast diagonal cut), page (a leaf turning),
  *  letterbox (a cinema frame opening), columns (newsprint columns dropping in),
- *  mirror (a symmetrical split from the centre), spot (a spotlight cone from above).
+ *  mirror (a symmetrical split from the centre), spot (a spotlight cone from above),
+ *  highlight (a marker stroke that widens into the page), feed (rising like a
+ *  scroll of content), ink (a blot spreading from the corner).
  */
 export function ServiceClose({
   index,

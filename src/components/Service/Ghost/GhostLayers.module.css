@@ -1,0 +1,221 @@
+.layers {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 5rem);
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) 2rem;
+  overflow: clip;
+}
+
+.head {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 1rem + 3.6vw, 5.4rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+.title :global(.accent) {
+  display: block;
+  color: var(--blush);
+}
+
+.labels {
+  display: grid;
+}
+
+.labels li {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--t-line);
+  transition: opacity 0.4s ease;
+}
+
+.labels li[data-dim] {
+  opacity: 0.3;
+}
+
+.labelName {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 1rem + 1vw, 2.2rem);
+  line-height: 1;
+}
+
+.note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.note::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+/* ---------- The stack ---------- */
+.stage {
+  position: relative;
+  height: min(76svh, 44rem);
+  perspective: 1800px;
+  perspective-origin: 50% 35%;
+}
+
+.stack {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(30rem, 34vw);
+  aspect-ratio: 3 / 4;
+  translate: -50% -50%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 2rem 2.1rem;
+  background: #f5f0e6;
+  color: var(--ink);
+  box-shadow: 0 1.5rem 3rem -1rem rgb(0 0 0 / 0.55);
+  will-change: transform, opacity;
+}
+
+.sheetHead {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid rgb(14 13 11 / 0.2);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.transcript {
+  background: #ece6d9;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.q {
+  opacity: 0.55;
+}
+
+.a {
+  padding-left: 1rem;
+}
+
+.outline {
+  background: #f1ebdf;
+  font-size: 0.95rem;
+}
+
+.part {
+  margin-top: 0.4rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ch {
+  padding-left: 1.2rem;
+  opacity: 0.8;
+}
+
+.manuscript {
+  background: #fbf8f1;
+  font-family: var(--font-serif);
+  padding-top: 3rem;
+}
+
+.msChapter {
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--oxblood);
+}
+
+.msTitle {
+  font-size: 2.1rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.msBody {
+  margin-top: 0.6rem;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  text-align: justify;
+}
+
+.msBody::first-letter {
+  float: left;
+  font-size: 3.4em;
+  line-height: 0.82;
+  padding: 0.04em 0.08em 0 0;
+  color: var(--oxblood);
+}
+
+.msLines {
+  display: block;
+  height: 6rem;
+  background: repeating-linear-gradient(to bottom, rgb(14 13 11 / 0.12) 0 0.28rem, transparent 0.28rem 1.15rem);
+  mask-image: linear-gradient(to bottom, #000, transparent);
+}
+
+/* ---------- Narrow / reduced: fanned stack, flat ---------- */
+@media (max-width: 1099.98px), (prefers-reduced-motion: reduce) {
+  .pin {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--section-pad);
+  }
+
+  .stage {
+    height: auto;
+    perspective: none;
+    padding-bottom: 3rem;
+  }
+
+  .stack {
+    position: relative;
+    left: auto;
+    top: auto;
+    translate: none;
+    width: min(26rem, 82vw);
+    margin: 3rem auto 0;
+  }
+
+  .sheet:nth-child(1) {
+    rotate: -5deg;
+    translate: -8% -10%;
+  }
+
+  .sheet:nth-child(2) {
+    rotate: 3deg;
+    translate: 6% -5%;
+  }
+
+  .labels li[data-dim] {
+    opacity: 1;
+  }
+}

@@ -17,14 +17,19 @@ type GroupId = (typeof serviceGroups)[number]["id"];
 export function ServiceRelated({
   current,
   group: groupId = "growth",
+  lead,
   tone = "ink",
 }: {
   current: string;
   group?: GroupId;
+  /** The closest sibling — listed first. */
+  lead?: string;
   tone?: Tone;
 }) {
   const group = serviceGroups.find((g) => g.id === groupId)!;
-  const others = group.services.filter((s) => s.href !== current);
+  const others = group.services
+    .filter((s) => s.href !== current)
+    .sort((a, b) => Number(b.href === lead) - Number(a.href === lead));
   return (
     <ServiceRelatedMotion
       className={styles.related}

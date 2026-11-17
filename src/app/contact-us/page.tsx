@@ -24,7 +24,7 @@ const contactPageJsonLd = {
     url: site.url,
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+1-917-765-8780",
+      telephone: "+1-332-203-2361",
       contactType: "customer service",
       areaServed: "Worldwide",
       availableLanguage: "English",

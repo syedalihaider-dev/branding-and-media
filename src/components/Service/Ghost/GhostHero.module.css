@@ -1,0 +1,137 @@
+.hero {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  overflow: clip;
+  isolation: isolate;
+  background: #0a0908 !important;
+}
+
+.media {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 64%;
+  z-index: -1;
+  will-change: transform;
+}
+
+.img {
+  object-fit: cover;
+  object-position: 40% 50%;
+  filter: grayscale(1) contrast(1.25) brightness(0.62);
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #0a0908 0%, rgb(10 9 8 / 0.75) 22%, transparent 60%),
+    linear-gradient(to top, #0a0908 2%, transparent 40%),
+    radial-gradient(ellipse at 60% 55%, transparent 30%, rgb(10 9 8 / 0.7) 85%);
+}
+
+.inner {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  align-self: center;
+  display: grid;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 0.4rem + 9vw, 11.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+.eyebrow {
+  margin-bottom: 1.2rem;
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  letter-spacing: 0.14em;
+}
+
+/* Ink reveal: a soft-edged mask sweeps through each line (--m) */
+.line {
+  --m: 130%;
+  display: block;
+  padding-bottom: 0.06em;
+  mask-image: linear-gradient(90deg, #000 calc(var(--m) - 30%), transparent var(--m));
+}
+
+.ghost {
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(237 232 223 / 0.42);
+  will-change: filter, opacity, letter-spacing;
+}
+
+.foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: end;
+  gap: 1.5rem 3rem;
+}
+
+.sign {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.signLine {
+  flex: 0 1 12rem;
+  height: 1px;
+  background: var(--bone);
+  opacity: 0.6;
+  transform-origin: left;
+  align-self: center;
+}
+
+.signName {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2rem, 1.2rem + 2vw, 3.4rem);
+  line-height: 1;
+  color: var(--blush);
+}
+
+.copy {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+}
+
+.lead {
+  max-width: 44ch;
+  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem);
+  line-height: 1.4;
+}
+
+@media (max-width: 899.98px) {
+  .media {
+    width: 100%;
+    opacity: 0.55;
+  }
+
+  .title {
+    font-size: 15.5vw;
+  }
+
+  .foot {
+    grid-template-columns: 1fr;
+  }
+}

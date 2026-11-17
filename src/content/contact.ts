@@ -7,7 +7,7 @@
 export const contactMeta = {
   title: "Contact Us",
   description:
-    "Start a conversation with Branding and Media. Tell us about your brand, book or business — your first conversation is free. Call (917) 765-8780 or send an enquiry.",
+    "Start a conversation with Branding and Media. Tell us about your brand, book or business — your first conversation is free. Call (332) 203-2361 or send an enquiry.",
   socialTitle: "Contact Branding and Media — Let's make your name known",
 };
 

@@ -1,0 +1,134 @@
+.voice {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 3fr) minmax(0, 7fr);
+  grid-template-rows: 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 3.5vw, 4rem);
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) 2.5rem;
+  overflow: clip;
+}
+
+.head {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.title {
+  font-size: clamp(2.4rem, 1rem + 3.4vw, 5rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  display: block;
+  text-transform: none;
+  font-size: 1.1em;
+}
+
+.intro {
+  max-width: 32ch;
+  line-height: 1.5;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: clip;
+  background: var(--ink);
+}
+
+.photo img {
+  object-fit: cover;
+}
+
+.stage {
+  display: grid;
+  gap: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.brief span {
+  color: var(--ink);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--fs-small);
+}
+
+.line {
+  min-height: 2.9em;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 1rem + 3.6vw, 5.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.mask {
+  display: inline-block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  vertical-align: top;
+  margin-right: 0.24em;
+}
+
+.mask > span {
+  display: inline-block;
+}
+
+.switch {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.option {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.75rem 1.1rem;
+  border: 1px solid var(--t-line);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+.option:hover {
+  border-color: var(--ink);
+}
+
+.option[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--blush);
+  border-color: var(--ink);
+}
+
+.optNum {
+  font-size: var(--fs-micro);
+  opacity: 0.6;
+}
+
+@media (max-width: 1099.98px) {
+  .pin {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--section-pad);
+  }
+
+  .photo {
+    aspect-ratio: 16 / 9;
+  }
+
+  .line {
+    min-height: 3.1em;
+    font-size: clamp(2rem, 9vw, 3.4rem);
+  }
+}

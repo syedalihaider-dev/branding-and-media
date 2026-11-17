@@ -237,3 +237,23 @@
 .close[data-reveal="columns"] .media img {
   filter: grayscale(1) contrast(1.1);
 }
+
+/* Highlight: the field is a marker colour; type set in the serif */
+.close[data-reveal="highlight"] .title :global(.accent) {
+  color: var(--t-fg);
+}
+
+/* Ink: a dark, slightly warm wash for the ghostwriting close */
+.close[data-reveal="ink"] .media img,
+.close[data-reveal="feed"] .media img {
+  filter: grayscale(1) contrast(1.1);
+}
+
+.close[data-reveal="ink"] .title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  font-variation-settings: normal;
+}

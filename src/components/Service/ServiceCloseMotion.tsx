@@ -11,6 +11,8 @@ const SHAPES: Record<string, [string, string]> = {
   letterbox: ["inset(41% 6% 41% 6%)", "inset(0% 0% 0% 0%)"],
   mirror: ["inset(0% 50% 0% 50%)", "inset(0% 0% 0% 0%)"],
   spot: ["ellipse(0% 0% at 50% 0%)", "ellipse(150% 135% at 50% 0%)"],
+  feed: ["inset(100% 4% 0% 4%)", "inset(0% 0% 0% 0%)"],
+  ink: ["circle(0% at 12% 88%)", "circle(160% at 12% 88%)"],
 };
 
 /**
@@ -31,7 +33,22 @@ export function ServiceCloseMotion(props: ComponentProps<"section">) {
       mm.add(MQ.motion, () => {
         const scrub = { trigger: ref.current, start: "top bottom", end: "top 5%", scrub: 0.5 };
 
-        if (reveal === "columns") {
+        if (reveal === "highlight") {
+          // A marker stroke draws across, then opens to fill the page.
+          gsap.fromTo(
+            q("[data-sc-field]"),
+            { clipPath: "inset(46% 100% 46% 0%)" },
+            {
+              keyframes: [
+                { clipPath: "inset(46% 0% 46% 0%)", ease: "power2.inOut" },
+                { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.in" },
+              ],
+              ease: "none",
+              scrollTrigger: scrub,
+            },
+          );
+          gsap.fromTo(q("[data-sc-media]"), { scale: 1.2 }, { scale: 1, ease: "none", scrollTrigger: { ...scrub, end: "bottom bottom" } });
+        } else if (reveal === "columns") {
           // Newsprint columns drop into place, outer columns last.
           const cols = q<HTMLElement>("[data-sc-blind]");
           gsap.fromTo(
