@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { serviceGroups } from "@/content/navigation";
+import { liveGroups, serviceGroups } from "@/content/navigation";
 import { site } from "@/content/site";
 
 /** Service pages that are live. Other groups join as they're built. */
-const liveServices = serviceGroups.find((g) => g.id === "growth")!.services;
+const liveServices = serviceGroups.filter((g) => liveGroups.includes(g.id)).flatMap((g) => g.services);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

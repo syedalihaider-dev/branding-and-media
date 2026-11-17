@@ -48,6 +48,19 @@ export function ServiceProofMotion(props: ComponentProps<"section">) {
           );
         });
 
+        // Voices: the quote inks in line by line (a soft vertical mask), the
+        // attribution rule draws after it.
+        q<HTMLElement>("[data-sp-voice]").forEach((v) => {
+          const tl = gsap.timeline({ scrollTrigger: { trigger: v, start: "top 75%" } });
+          tl.fromTo(
+            v.querySelector("blockquote"),
+            { clipPath: "inset(0% 0% 100% 0%)", y: 30 },
+            { clipPath: "inset(0% 0% -10% 0%)", y: 0, duration: 1.6, ease: "expo.out" },
+          )
+            .from(v.querySelector("[data-sp-rule]"), { scaleX: 0, duration: 1, ease: "expo.inOut" }, 0.5)
+            .from(v.querySelectorAll(":scope > p, figcaption"), { autoAlpha: 0, duration: 0.8 }, 0.4);
+        });
+
         q<HTMLElement>("[data-sp-file]").forEach((file) => {
           gsap.from(file.children, {
             y: 40,

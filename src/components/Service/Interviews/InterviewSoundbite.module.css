@@ -1,0 +1,136 @@
+.bite {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem var(--gutter);
+  padding: var(--section-pad) var(--gutter);
+  overflow: clip;
+}
+
+.bite > :global(.kicker) {
+  grid-column: 1 / -1;
+}
+
+.lead {
+  grid-column: 1 / span 5;
+  font-size: var(--fs-lead);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.quote {
+  position: relative;
+  grid-column: 1 / -1;
+  margin-top: clamp(1rem, 4vw, 3rem);
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 0.8rem + 6.6vw, 9.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+}
+
+.quote p {
+  position: relative;
+  padding-left: 0.42em;
+}
+
+.mark {
+  position: absolute;
+  left: -0.06em;
+  top: -0.28em;
+  font-size: 2.1em;
+  line-height: 1;
+  color: var(--t-accent);
+  font-style: italic;
+}
+
+.word {
+  display: inline-block;
+  opacity: 0.16;
+  transition: none;
+}
+
+/* ---------- Waveform ---------- */
+.wave {
+  position: relative;
+  grid-column: 1 / -1;
+  margin-top: clamp(2rem, 5vw, 4rem);
+}
+
+.bars {
+  display: flex;
+  align-items: center;
+  gap: clamp(2px, 0.35vw, 5px);
+  height: clamp(3.5rem, 8vw, 7rem);
+}
+
+.bars i {
+  flex: 1;
+  height: calc(var(--h) * 100%);
+  background: var(--t-fg);
+  opacity: 0.2;
+  border-radius: 1px;
+}
+
+.bars i[data-on] {
+  opacity: 1;
+  background: var(--t-accent);
+}
+
+.head {
+  position: absolute;
+  top: -0.75rem;
+  left: 0;
+  width: 1px;
+  height: calc(clamp(3.5rem, 8vw, 7rem) + 1.5rem);
+  background: var(--t-fg);
+}
+
+.head::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 9px;
+  height: 9px;
+  background: var(--t-fg);
+  rotate: 45deg;
+}
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  grid-column: 7 / -1;
+  max-width: 40ch;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+@media (max-width: 899.98px) {
+  .lead,
+  .note {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Without motion the sentence is simply "said" */
+@media (prefers-reduced-motion: reduce) {
+  .word,
+  .bars i {
+    opacity: 1;
+  }
+
+  .bars i {
+    background: var(--t-accent);
+  }
+
+  .head {
+    left: 100%;
+  }
+}

@@ -9,17 +9,28 @@ import { pad } from "./Words";
 import { ServiceCloseMotion } from "./ServiceCloseMotion";
 import styles from "./ServiceClose.module.css";
 
-export type CloseReveal = "shutter" | "iris" | "card" | "slash" | "page";
+export type CloseReveal =
+  | "shutter"
+  | "iris"
+  | "card"
+  | "slash"
+  | "page"
+  | "letterbox"
+  | "columns"
+  | "mirror"
+  | "spot";
 
 type Media = { kind: "image"; src: string } | { kind: "video" };
 
-const SHUTTERS = 12;
+const BLINDS: Partial<Record<CloseReveal, number>> = { shutter: 12, columns: 6 };
 
 /**
  * The closing moment. Same promise on every service page — a free first
  * conversation — but each arrives through its own reveal:
  *  shutter (a grid assembling), iris (a lens opening), card (a post
- *  expanding to full screen), slash (a fast diagonal cut), page (a leaf turning).
+ *  expanding to full screen), slash (a fast diagonal cut), page (a leaf turning),
+ *  letterbox (a cinema frame opening), columns (newsprint columns dropping in),
+ *  mirror (a symmetrical split from the centre), spot (a spotlight cone from above).
  */
 export function ServiceClose({
   index,
@@ -46,8 +57,8 @@ export function ServiceClose({
       aria-labelledby="close-title"
     >
       <div className={styles.field} data-sc-field aria-hidden="true">
-        {reveal === "shutter"
-          ? Array.from({ length: SHUTTERS }, (_, i) => <span key={i} className={styles.blind} data-sc-blind />)
+        {BLINDS[reveal]
+          ? Array.from({ length: BLINDS[reveal]! }, (_, i) => <span key={i} className={styles.blind} data-sc-blind />)
           : null}
         {media ? (
           <div className={styles.media} data-sc-media>

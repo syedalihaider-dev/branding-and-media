@@ -190,6 +190,107 @@
   --stroke-color: var(--ink);
 }
 
+/* ---------- Reel: a strip of film ---------- */
+.rail[data-variant="reel"] .grid {
+  /* Sprocket holes along the top and bottom edges */
+  background:
+    linear-gradient(var(--t-fg), var(--t-fg)) 0 1.9rem / 100% 1px no-repeat,
+    linear-gradient(var(--t-fg), var(--t-fg)) 0 calc(100% - 1.9rem) / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 1.1rem, var(--t-line) 1.1rem 2.3rem, transparent 2.3rem 3.2rem) 0
+      0.55rem / 100% 0.8rem no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 1.1rem, var(--t-line) 1.1rem 2.3rem, transparent 2.3rem 3.2rem) 0
+      calc(100% - 0.55rem) / 100% 0.8rem no-repeat;
+  mask-image: none;
+  opacity: 0.7;
+}
+
+.rail[data-variant="reel"] .step {
+  border-left-style: dashed;
+}
+
+.rail[data-variant="reel"] .coord::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.6rem;
+  border-radius: 50%;
+  background: var(--t-accent);
+  vertical-align: 0.05em;
+}
+
+.rail[data-variant="reel"] .stepTitle {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  font-variation-settings: normal;
+}
+
+/* ---------- Press: a galley proof ---------- */
+.rail[data-variant="press"] .grid {
+  background:
+    linear-gradient(90deg, transparent calc(50% - 0.5px), var(--t-line) calc(50% - 0.5px) calc(50% + 0.5px), transparent 0)
+      0 0 / 100% 100%;
+  mask-image: none;
+  opacity: 0;
+}
+
+.rail[data-variant="press"] .step {
+  border-left: 0;
+}
+
+/* Crop marks at each proof's corners */
+.rail[data-variant="press"] .step::before,
+.rail[data-variant="press"] .step::after {
+  content: "";
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  pointer-events: none;
+}
+
+.rail[data-variant="press"] .step::before {
+  top: calc(var(--header-h) + 0.75rem);
+  left: 0.75rem;
+  border-top: 1px solid var(--t-fg);
+  border-left: 1px solid var(--t-fg);
+}
+
+.rail[data-variant="press"] .step::after {
+  bottom: 5rem;
+  right: 0.75rem;
+  border-bottom: 1px solid var(--t-fg);
+  border-right: 1px solid var(--t-fg);
+}
+
+.rail[data-variant="press"] .numeral {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.04em;
+  font-variation-settings: normal;
+  color: var(--oxblood);
+  -webkit-text-stroke: 0;
+}
+
+.rail[data-variant="press"] .stepTitle {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  font-variation-settings: normal;
+}
+
+.rail[data-variant="press"] .stepBody {
+  max-width: 30ch;
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 1rem + 0.35vw, 1.3rem);
+  line-height: 1.35;
+}
+
 /* ---------- Touch / narrow: vertical sequence ---------- */
 @media (max-width: 1099.98px) {
   .track {

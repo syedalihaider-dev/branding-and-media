@@ -8,13 +8,16 @@ const SHAPES: Record<string, [string, string]> = {
   card: ["inset(30% 38% 22% 38% round 18px)", "inset(0% 0% 0% 0% round 0px)"],
   slash: ["polygon(0% 100%, 0% 100%, 0% 100%, 0% 100%)", "polygon(0% 100%, 0% -40%, 140% -40%, 100% 100%)"],
   page: ["polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)", "polygon(-20% 0%, 100% 0%, 100% 100%, 0% 100%)"],
+  letterbox: ["inset(41% 6% 41% 6%)", "inset(0% 0% 0% 0%)"],
+  mirror: ["inset(0% 50% 0% 50%)", "inset(0% 0% 0% 0%)"],
+  spot: ["ellipse(0% 0% at 50% 0%)", "ellipse(150% 135% at 50% 0%)"],
 };
 
 /**
  * The field is scrubbed in as the section approaches; the headline lands
- * once it has arrived. Shutter is the only multi-element reveal: twelve
- * blinds rise in a staggered wave, alternating direction like a grid
- * snapping into place.
+ * once it has arrived. Shutter and columns are multi-element reveals:
+ * shutter's twelve blinds rise in an alternating wave; columns' six drop
+ * from the top like a page being set.
  */
 export function ServiceCloseMotion(props: ComponentProps<"section">) {
   const ref = useRef<HTMLElement>(null);
@@ -28,7 +31,16 @@ export function ServiceCloseMotion(props: ComponentProps<"section">) {
       mm.add(MQ.motion, () => {
         const scrub = { trigger: ref.current, start: "top bottom", end: "top 5%", scrub: 0.5 };
 
-        if (reveal === "shutter") {
+        if (reveal === "columns") {
+          // Newsprint columns drop into place, outer columns last.
+          const cols = q<HTMLElement>("[data-sc-blind]");
+          gsap.fromTo(
+            cols,
+            { yPercent: -101 },
+            { yPercent: 0, ease: "none", stagger: { each: 0.08, from: "center" }, scrollTrigger: scrub },
+          );
+          gsap.fromTo(q("[data-sc-media]"), { autoAlpha: 0 }, { autoAlpha: 1, ease: "none", scrollTrigger: scrub });
+        } else if (reveal === "shutter") {
           const blinds = q<HTMLElement>("[data-sc-blind]");
           blinds.forEach((b, i) => gsap.set(b, { transformOrigin: i % 2 ? "50% 0%" : "50% 100%" }));
           gsap.fromTo(blinds, { scaleY: 0 }, { scaleY: 1, ease: "none", stagger: 0.05, scrollTrigger: scrub });

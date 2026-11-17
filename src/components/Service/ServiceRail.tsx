@@ -4,12 +4,21 @@ import { Words, pad } from "./Words";
 import { ServiceRailMotion } from "./ServiceRailMotion";
 import styles from "./ServiceRail.module.css";
 
+const COORD = {
+  blueprint: (n: number) => `x ${pad(n)}0 / y 00`,
+  velocity: (n: number) => `Phase ${pad(n)}`,
+  reel: (n: number) => `Scene ${pad(n)} — Take 1`,
+  press: (n: number) => `Proof ${pad(n)} · p. ${n * 2}`,
+} as const;
+
 /**
  * Process as a journey you travel sideways (desktop: pinned horizontal
  * scroll; touch: a vertical sequence). A rail runs the length of the
  * track and fills as you go.
  *  blueprint: drafting grid, coordinates — for build work.
  *  velocity:  signal ground; panels shear with scroll speed — for performance work.
+ *  reel:      a strip of film — sprockets, scene and take — for on-camera work.
+ *  press:     a galley proof — crop marks, serif folios — for the printed word.
  */
 export function ServiceRail({
   id,
@@ -28,7 +37,7 @@ export function ServiceRail({
   intro: string;
   steps: Step[];
   tone?: Tone;
-  variant?: "blueprint" | "velocity";
+  variant?: "blueprint" | "velocity" | "reel" | "press";
 }) {
   return (
     <ServiceRailMotion
@@ -59,7 +68,7 @@ export function ServiceRail({
             {steps.map((s, i) => (
               <li key={s.title} className={styles.step} data-sr-step>
                 <p className={`label ${styles.coord}`} aria-hidden="true">
-                  {variant === "blueprint" ? `x ${pad(i + 1)}0 / y 00` : `Phase ${pad(i + 1)}`}
+                  {COORD[variant](i + 1)}
                 </p>
                 <span className={`${styles.numeral} stroke`} aria-hidden="true" data-sr-num>
                   {pad(i + 1)}

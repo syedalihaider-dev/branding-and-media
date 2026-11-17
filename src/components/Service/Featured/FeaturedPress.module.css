@@ -1,0 +1,164 @@
+.press {
+  position: relative;
+  z-index: 2;
+  height: 280svh;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  align-items: center;
+  gap: clamp(2rem, 4vw, 5rem);
+  padding: calc(var(--header-h) + 1rem) var(--gutter) 2rem;
+  overflow: clip;
+}
+
+.head {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.title {
+  font-size: clamp(2.6rem, 1rem + 4vw, 6rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  display: block;
+  text-transform: none;
+  font-size: 1.12em;
+}
+
+.body {
+  max-width: 32ch;
+  line-height: 1.5;
+  opacity: 0.82;
+}
+
+/* ---------- The drum ---------- */
+.viewport {
+  --size: clamp(2.6rem, 0.6rem + 5.4vw, 7.4rem);
+  position: relative;
+  height: calc(var(--size) * 4.2);
+  perspective: 1600px;
+  font-size: var(--size);
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+}
+
+.drum {
+  --step: calc(360deg / var(--n));
+  /* radius so n faces of 1.15em close the ring */
+  --radius: calc(1.15em / (2 * tan(180deg / var(--n))));
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.name {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.15em;
+  margin-top: -0.575em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 68;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backface-visibility: hidden;
+  transform: rotateX(calc(var(--i) * var(--step) * -1)) translateZ(var(--radius));
+  opacity: 0.25;
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  font-variation-settings: normal;
+  font-size: 1.08em;
+}
+
+.name[data-front] {
+  color: var(--bone);
+}
+
+/* The reading line */
+.frame {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.3em;
+  translate: 0 -50%;
+  border-block: 1px solid var(--t-line);
+  pointer-events: none;
+}
+
+@media (max-width: 899.98px) {
+  .press {
+    height: 240svh;
+  }
+
+  .sticky {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+  }
+
+  .viewport {
+    --size: 11vw;
+  }
+}
+
+/* Reduced motion: no drum — a wrapped line of names */
+@media (prefers-reduced-motion: reduce) {
+  .press {
+    height: auto;
+  }
+
+  .sticky {
+    position: static;
+    height: auto;
+    padding-block: var(--section-pad);
+  }
+
+  .viewport {
+    height: auto;
+    perspective: none;
+    mask-image: none;
+    font-size: clamp(1.8rem, 1rem + 2.6vw, 3.6rem);
+  }
+
+  .drum {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2em 0.6em;
+  }
+
+  .name {
+    position: static;
+    height: auto;
+    margin: 0;
+    transform: none;
+    opacity: 1;
+  }
+
+  .frame {
+    display: none;
+  }
+}

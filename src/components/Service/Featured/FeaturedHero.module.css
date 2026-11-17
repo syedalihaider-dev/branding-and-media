@@ -1,0 +1,190 @@
+.hero {
+  --mx: 62;
+  --my: 42;
+  --r: 30;
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  overflow: clip;
+  isolation: isolate;
+  background: #070605 !important;
+}
+
+/* The darkened house — just enough to sense the room */
+.house {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.dim {
+  object-fit: cover;
+  object-position: 60% 35%;
+  opacity: 0.12;
+  filter: grayscale(0.6) brightness(0.6);
+}
+
+/* What the light reveals */
+.lit {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  mask-image: radial-gradient(
+    circle calc(var(--r) * 1vmax) at calc(var(--mx) * 1%) calc(var(--my) * 1%),
+    #000 0%,
+    #000 38%,
+    rgb(0 0 0 / 0.35) 70%,
+    transparent 100%
+  );
+}
+
+.litInner {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.img {
+  object-fit: cover;
+  object-position: 60% 35%;
+  filter: contrast(1.08) saturate(1.05);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(to top, rgb(7 6 5 / 0.85), transparent 45%);
+  pointer-events: none;
+}
+
+/* ---------- Content ---------- */
+.inner {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 2rem;
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  align-self: end;
+  display: grid;
+}
+
+.eyebrow {
+  margin-bottom: 1.4rem;
+  font-size: var(--fs-small);
+  letter-spacing: 0.14em;
+}
+
+.not {
+  position: relative;
+  justify-self: start;
+  font-size: clamp(1.6rem, 0.9rem + 2.6vw, 3.8rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variation-settings: "wdth" 80;
+  text-transform: uppercase;
+  color: var(--muted-on-dark);
+}
+
+.not > span:first-child {
+  display: inline-block;
+}
+
+.strike {
+  position: absolute;
+  left: -0.1em;
+  right: -0.1em;
+  top: 54%;
+  height: 0.07em;
+  background: var(--signal);
+  transform-origin: left;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.2em;
+  padding-bottom: 0.08em;
+}
+
+.line > span {
+  display: block;
+}
+
+.title :global(.accent) {
+  font-size: clamp(5.5rem, 0.5rem + 21vw, 26rem);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  color: var(--bone);
+  margin-left: -0.04em;
+}
+
+.foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) auto;
+  align-items: end;
+  gap: 1.5rem 3rem;
+}
+
+.lead {
+  max-width: 46ch;
+  font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.35rem);
+  line-height: 1.35;
+}
+
+.facts {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.facts dt {
+  margin-bottom: 0.3rem;
+}
+
+.facts dd {
+  font-size: var(--fs-small);
+}
+
+@media (max-width: 767.98px) {
+  .hero {
+    --mx: 58;
+    --my: 34;
+    --r: 52;
+  }
+
+  .dim,
+  .img {
+    object-position: 58% 35%;
+  }
+
+  .title :global(.accent) {
+    font-size: 26vw;
+  }
+
+  .foot {
+    grid-template-columns: 1fr;
+  }
+
+  .facts {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    --r: 55;
+  }
+}

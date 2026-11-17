@@ -23,6 +23,49 @@
   background: transparent;
 }
 
+/* Columns: six newsprint columns separated by hairline gutters */
+.close[data-reveal="columns"] .field {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: transparent;
+}
+
+.close[data-reveal="columns"] .title,
+.close[data-reveal="mirror"] .title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  font-variation-settings: normal;
+}
+
+/* Mirror: the last line reflected beneath itself */
+.close[data-reveal="mirror"] .line:last-child {
+  text-align: left;
+}
+
+.close[data-reveal="mirror"] .line:last-child > span {
+  -webkit-box-reflect: below -0.12em linear-gradient(transparent 35%, rgb(0 0 0 / 0.28));
+}
+
+/* Spot: light falls from above, the image glows through it */
+.close[data-reveal="spot"] .media::after {
+  background: radial-gradient(ellipse 70% 85% at 50% 0%, rgb(14 13 11 / 0.2), rgb(14 13 11 / 0.9) 75%);
+  opacity: 1;
+}
+
+.close[data-reveal="spot"] .line:last-child,
+.close[data-reveal="spot"] .line:first-child {
+  text-align: center;
+}
+
+.close[data-reveal="letterbox"] .media::after {
+  background: linear-gradient(90deg, var(--t-bg) 20%, rgb(14 13 11 / 0.35));
+  opacity: 0.88;
+}
+
 .blind {
   display: block;
   background: var(--t-bg);
@@ -188,4 +231,9 @@
   .go {
     justify-content: space-between;
   }
+}
+
+/* Columns: the printed page is black and white */
+.close[data-reveal="columns"] .media img {
+  filter: grayscale(1) contrast(1.1);
 }

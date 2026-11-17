@@ -1,0 +1,255 @@
+.section {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 6rem);
+  padding: calc(var(--header-h) + 1.5rem) var(--gutter) 2.5rem;
+  overflow: clip;
+}
+
+.head {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.title {
+  font-size: clamp(2.4rem, 1rem + 3.6vw, 5.6rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 72;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  display: block;
+  text-transform: none;
+  font-size: 1.08em;
+  line-height: 0.88;
+}
+
+.body {
+  max-width: 38ch;
+  line-height: 1.5;
+}
+
+.note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.note::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: currentColor;
+}
+
+/* ---------- Panel ---------- */
+.panel {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 2.4vw, 2.25rem);
+  background: #f7f3eb;
+  box-shadow:
+    0 0 0 1px var(--t-line),
+    0 2rem 4rem -2rem rgb(14 13 11 / 0.35);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--t-line);
+  border-radius: 999px;
+  background: var(--bone);
+}
+
+.glass {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+}
+
+.query {
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.state {
+  position: relative;
+  margin-left: auto;
+  display: grid;
+}
+
+.state > span {
+  grid-area: 1 / 1;
+  justify-self: end;
+}
+
+.state [data-rr-state="after"] {
+  opacity: 0;
+  color: var(--ink);
+}
+
+.layers {
+  position: relative;
+  display: grid;
+}
+
+.layer {
+  grid-area: 1 / 1;
+  display: grid;
+  gap: 0.6rem;
+  background: #f7f3eb;
+}
+
+.layerLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.after {
+  clip-path: inset(0% 100% 0% 0%);
+}
+
+/* ---------- Results ---------- */
+.results {
+  display: grid;
+}
+
+.result {
+  display: grid;
+  gap: 0.3rem;
+  padding: clamp(0.9rem, 1.8vh, 1.3rem) 0;
+  border-top: 1px solid var(--t-line);
+}
+
+.kind {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--t-muted);
+}
+
+.dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--signal);
+}
+
+.resultTitle {
+  font-size: clamp(1.1rem, 0.9rem + 0.6vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.meta {
+  font-size: var(--fs-small);
+  color: var(--t-muted);
+}
+
+/* The neglected page: faded, slightly out of focus, stale */
+.results[data-tone="before"] .resultTitle {
+  color: rgb(14 13 11 / 0.6);
+  text-decoration: underline 1px rgb(14 13 11 / 0.25);
+  text-underline-offset: 0.2em;
+}
+
+.results[data-tone="before"] .result {
+  filter: blur(0.3px);
+}
+
+/* The managed page: crisp, owned, serif for your name */
+.results[data-tone="after"] .dot {
+  background: var(--ink);
+}
+
+.results[data-tone="after"] .result:first-child .resultTitle {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 1rem + 1.2vw, 2.2rem);
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Handle ---------- */
+.handle {
+  position: absolute;
+  top: -0.5rem;
+  bottom: -0.5rem;
+  left: 0;
+  width: 1px;
+  background: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.grip {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  translate: -50% -50%;
+  padding: 0.45rem 0.8rem;
+  background: var(--ink);
+  color: var(--bone);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---------- Narrow ---------- */
+@media (max-width: 1099.98px) {
+  .pin {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--section-pad);
+  }
+}
+
+/* ---------- Reduced motion: both pages, labelled ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .layers {
+    gap: 2rem;
+  }
+
+  .layer {
+    grid-area: auto;
+  }
+
+  .after {
+    clip-path: none;
+  }
+
+  .layerLabel {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    margin-bottom: 0.25rem;
+  }
+
+  .handle,
+  .state {
+    display: none;
+  }
+}

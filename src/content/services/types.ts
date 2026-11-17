@@ -1,7 +1,7 @@
 import type { Project } from "@/content/site";
 
 /**
- * Shared shapes for the Digital Growth & Marketing service pages.
+ * Shared shapes for the service pages (every service group).
  * Copy lives in one file per service; components stay presentational.
  */
 
@@ -48,6 +48,13 @@ export type Case =
       brief: string;
       outcome: string;
       services: string[];
+    }
+  | {
+      /** A real client testimonial, quoted from the agency's site. */
+      kind: "voice";
+      quote: string;
+      name: string;
+      context: string;
     };
 
 /** The service tones. Each maps to a header theme. */

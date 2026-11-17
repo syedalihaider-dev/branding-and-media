@@ -74,6 +74,22 @@ export function ServiceProof({
                 <p className={styles.tags}>{c.project.services.join("  /  ")}</p>
               </div>
             </article>
+          ) : c.kind === "voice" ? (
+            <figure key={c.name} className={styles.voice} data-sp-voice data-flip={i % 2 === 0}>
+              <p className={`label ${styles.voiceLabel}`}>In their words — {c.context}</p>
+              <blockquote className={styles.voiceQuote}>
+                <p>
+                  <span className={styles.mark} aria-hidden="true">
+                    &ldquo;
+                  </span>
+                  {c.quote}&rdquo;
+                </p>
+              </blockquote>
+              <figcaption className={styles.voiceName}>
+                <span className={styles.voiceRule} data-sp-rule aria-hidden="true" />
+                {c.name}
+              </figcaption>
+            </figure>
           ) : (
             <article key={c.client} className={styles.file} aria-labelledby={`${id}-file-${i}`} data-sp-file>
               <div className={styles.fileHead}>

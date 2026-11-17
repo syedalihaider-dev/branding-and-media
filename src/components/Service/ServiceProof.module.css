@@ -152,7 +152,66 @@
   grid-column: 1 / -1;
 }
 
+/* ---------- Voice (a real client testimonial) ---------- */
+.voice {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem var(--gutter);
+}
+
+.voiceLabel,
+.voiceQuote,
+.voiceName {
+  grid-column: 3 / -1;
+}
+
+.voice[data-flip="true"] .voiceLabel,
+.voice[data-flip="true"] .voiceQuote,
+.voice[data-flip="true"] .voiceName {
+  grid-column: 1 / span 10;
+}
+
+.voiceQuote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.9rem, 1rem + 2.9vw, 4.4rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+.mark {
+  display: inline-block;
+  margin-right: 0.04em;
+  color: var(--t-accent);
+  font-style: italic;
+}
+
+.voiceName {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.voiceRule {
+  width: clamp(3rem, 8vw, 7rem);
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+}
+
 @media (max-width: 899.98px) {
+  .voiceLabel,
+  .voiceQuote,
+  .voiceName,
+  .voice[data-flip="true"] .voiceLabel,
+  .voice[data-flip="true"] .voiceQuote,
+  .voice[data-flip="true"] .voiceName {
+    grid-column: 1 / -1;
+  }
+
   .frame,
   .meta,
   .spread[data-flip="true"] .frame,

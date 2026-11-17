@@ -7,15 +7,24 @@ import { pad } from "./Words";
 import { ServiceRelatedMotion } from "./ServiceRelatedMotion";
 import styles from "./ServiceRelated.module.css";
 
-const growth = serviceGroups.find((g) => g.id === "growth")!;
+type GroupId = (typeof serviceGroups)[number]["id"];
 
 /**
- * The rest of the Digital Growth & Marketing family — internal links set
+ * The rest of a service family — internal links set
  * as a strip of tall frames. Hovering one widens it and wipes its still in.
  * (The category itself has no page; this is where it lives on a service page.)
  */
-export function ServiceRelated({ current, tone = "ink" }: { current: string; tone?: Tone }) {
-  const others = growth.services.filter((s) => s.href !== current);
+export function ServiceRelated({
+  current,
+  group: groupId = "growth",
+  tone = "ink",
+}: {
+  current: string;
+  group?: GroupId;
+  tone?: Tone;
+}) {
+  const group = serviceGroups.find((g) => g.id === groupId)!;
+  const others = group.services.filter((s) => s.href !== current);
   return (
     <ServiceRelatedMotion
       className={styles.related}
@@ -25,17 +34,17 @@ export function ServiceRelated({ current, tone = "ink" }: { current: string; ton
     >
       <header className={styles.head}>
         <p className="label kicker">
-          <span className="kicker-index">+</span> {growth.label}
+          <span className="kicker-index">+</span> {group.label}
         </p>
         <h2 className={styles.title} id="related-title">
-          {growth.lockup[0]} <span className="accent">{growth.lockup[1]}</span>
+          {group.lockup[0]} <span className="accent">{group.lockup[1]}</span>
         </h2>
-        <p className={styles.desc}>{growth.description} Each discipline is stronger with the others beside it.</p>
+        <p className={styles.desc}>{group.description} Each discipline is stronger with the others beside it.</p>
       </header>
 
       <ul className={styles.strip}>
         {others.map((s) => {
-          const n = growth.services.findIndex((x) => x.href === s.href) + 1;
+          const n = group.services.findIndex((x) => x.href === s.href) + 1;
           return (
             <li key={s.href} className={styles.item} data-sr-item>
               <Link href={s.href} prefetch={prefetchFor(s.href)} className={styles.link}>

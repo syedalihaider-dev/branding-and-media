@@ -1,0 +1,215 @@
+.covers {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  position: relative;
+  padding: var(--section-pad) var(--gutter);
+  overflow: clip;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 1.25rem 2rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.head > :global(.kicker) {
+  grid-column: 1 / -1;
+}
+
+.title {
+  font-size: clamp(2.6rem, 1rem + 4.6vw, 6.4rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 70;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  text-transform: none;
+  font-size: 1.12em;
+}
+
+.count {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Cover ---------- */
+.cover {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: clip;
+  background: var(--ink);
+  box-shadow: 0 3rem 6rem -2rem rgb(0 0 0 / 0.7);
+}
+
+.cover img {
+  object-fit: cover;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgb(14 13 11 / 0.55), transparent 32%),
+    linear-gradient(to top, rgb(14 13 11 / 0.8), transparent 42%);
+}
+
+.mast {
+  position: absolute;
+  top: 4%;
+  left: 5%;
+  right: 5%;
+  font-size: clamp(2.4rem, 1rem + 4vw, 5.6rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 62;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--bone);
+  overflow-wrap: anywhere;
+}
+
+.issue {
+  position: absolute;
+  left: 6%;
+  bottom: 5%;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bone);
+  opacity: 0.8;
+}
+
+.coverline {
+  position: absolute;
+  left: 6%;
+  right: 30%;
+  bottom: 10%;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 0.8rem + 1.4vw, 2.4rem);
+  line-height: 1;
+  color: var(--bone);
+}
+
+.info {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.name {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 1.2rem + 2.2vw, 3.8rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+}
+
+.body {
+  max-width: 34ch;
+  line-height: 1.5;
+  opacity: 0.84;
+}
+
+/* ---------- Touch default: swipeable strip ---------- */
+.stage {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(72vw, 22rem);
+  gap: 1.25rem;
+  margin-inline: calc(var(--gutter) * -1);
+  padding: 0 var(--gutter) 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+
+.stage::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+  scroll-snap-align: start;
+}
+
+/* ---------- Reduced motion on wide screens: a grid ---------- */
+@media (min-width: 1100px) and (prefers-reduced-motion: reduce) {
+  .stage {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-auto-columns: auto;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+}
+
+/* ---------- Desktop with motion: covers in depth ---------- */
+@media (min-width: 1100px) and (prefers-reduced-motion: no-preference) {
+  .pin {
+    height: 100svh;
+    padding: calc(var(--header-h) + 1.5rem) var(--gutter) 2.5rem;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .head {
+    margin-bottom: 0;
+  }
+
+  .stage {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .item {
+    position: absolute;
+    inset: 0;
+    display: block;
+    perspective: 1400px;
+    perspective-origin: 45% 45%;
+  }
+
+  .cover {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(28vw, 60svh * 0.75);
+    /* centring offset is applied by the motion (xPercent / yPercent) */
+    will-change: transform, opacity;
+  }
+
+  .info {
+    position: absolute;
+    left: 0;
+    bottom: 8%;
+    width: min(30vw, 28rem);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.5s ease,
+      visibility 0.5s,
+      translate 0.7s var(--ease-out);
+    translate: 0 1.5rem;
+  }
+
+  .item[data-active] .info {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+  }
+}

@@ -5,7 +5,8 @@
  * Service categories are *groupings only*: they have no landing page of
  * their own. Each service gets a flat, top-level URL so the category can
  * be renamed or regrouped later without breaking links.
- * Digital Growth & Marketing pages are live; the other groups follow.
+ * Digital Growth & Marketing and Brand Development & Media Relations pages
+ * are live; Editorial & Publishing follows.
  */
 
 export type Still = {
@@ -97,13 +98,13 @@ export const serviceGroups: ServiceGroup[] = [
         label: "Media Publications",
         href: "/media-publications",
         blurb: "Your story in the publications your audience reads.",
-        still: still("reflection"),
+        still: { src: "/media/editorial/stairs.webp", width: 1028, height: 771 },
       },
       {
         label: "Online Reputation Management",
         href: "/online-reputation-management",
         blurb: "What people find when they search your name.",
-        still: still("moment"),
+        still: still("reflection"),
       },
       {
         label: "Featured Media Placements",
@@ -170,8 +171,10 @@ export const pageLinks = [
  * Service pages that exist. Until a page is built its links are not
  * prefetched (avoids background 404s); add the href here when it ships.
  */
+export const liveGroups: ServiceGroup["id"][] = ["growth", "media"];
+
 const builtServicePages = new Set<string>(
-  serviceGroups.find((g) => g.id === "growth")!.services.map((s) => s.href),
+  serviceGroups.filter((g) => liveGroups.includes(g.id)).flatMap((g) => g.services.map((s) => s.href)),
 );
 
 export const prefetchFor = (href: string) => (builtServicePages.has(href) ? undefined : false);

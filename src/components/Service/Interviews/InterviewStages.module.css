@@ -1,0 +1,217 @@
+.stages {
+  position: relative;
+  z-index: 2;
+}
+
+.pin {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: clamp(1.5rem, 4vh, 3rem);
+  padding: calc(var(--header-h) + 1.75rem) var(--gutter) 2.5rem;
+  overflow: clip;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: clamp(2.2rem, 1rem + 3.4vw, 5rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  font-variation-settings: "wdth" 72;
+  text-transform: uppercase;
+}
+
+.title :global(.accent) {
+  text-transform: none;
+  font-size: 1.1em;
+}
+
+/* ---------- Desktop: titles left, one shared monitor right ---------- */
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  grid-template-rows: repeat(4, auto) 1fr;
+  column-gap: clamp(2rem, 5vw, 6rem);
+  align-content: center;
+}
+
+.item {
+  display: contents;
+}
+
+.name {
+  grid-column: 1;
+  grid-row: var(--r);
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--t-line);
+  font-size: clamp(2.4rem, 0.8rem + 3.6vw, 5.6rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  font-variation-settings: "wdth" 68;
+  text-transform: uppercase;
+  opacity: 0.22;
+  will-change: opacity, transform;
+}
+
+.ch {
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+  color: var(--t-accent);
+  translate: 0 -1.6em;
+}
+
+.screen {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: clip;
+  background: var(--ink);
+  outline: 1px solid var(--t-line);
+  outline-offset: 0.6rem;
+}
+
+.screen img {
+  object-fit: cover;
+}
+
+/* Scanlines over every shot — faint, just enough to read as a screen */
+.screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgb(14 13 11 / 0.14) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+
+.osd {
+  position: absolute;
+  z-index: 1;
+  inset: 1rem 1.1rem auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bone);
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.5);
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.live i {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--signal);
+}
+
+.body {
+  grid-column: 2;
+  grid-row: 5;
+  align-self: start;
+  max-width: 44ch;
+  margin-top: 1.75rem;
+  font-size: var(--fs-lead);
+  line-height: 1.25;
+}
+
+/* Pinned state: stack shots and captions in the same cells */
+@media (min-width: 1100px) and (prefers-reduced-motion: no-preference) {
+  .item:not(:first-child) .screen {
+    clip-path: inset(0% 0% 100% 0%);
+  }
+
+  .item:not(:first-child) .body {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .item:first-child .name {
+    opacity: 1;
+  }
+}
+
+/* The scanline that sweeps when the channel changes */
+.scan {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--t-accent);
+  box-shadow: 0 0 18px 2px var(--t-accent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- Narrow / reduced: framed sequence ---------- */
+@media (max-width: 1099.98px), (prefers-reduced-motion: reduce) {
+  .pin {
+    min-height: 0;
+    padding-block: var(--section-pad);
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: clamp(3rem, 8vw, 5rem);
+  }
+
+  .item {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .name,
+  .screen,
+  .body {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .name {
+    order: -1;
+    opacity: 1;
+    font-size: clamp(2.2rem, 10vw, 4rem);
+  }
+
+  .screen {
+    outline-offset: 0.4rem;
+  }
+
+  .body {
+    margin-top: 0;
+    font-size: clamp(1.1rem, 1rem + 0.6vw, 1.4rem);
+  }
+
+  .scan {
+    display: none;
+  }
+}
+
+@media (min-width: 1100px) and (prefers-reduced-motion: reduce) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
